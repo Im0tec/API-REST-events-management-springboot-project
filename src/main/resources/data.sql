@@ -1,0 +1,1 @@
+INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email) VALUES ('Comic con', 'Evento nerd', 'São Paulo', '2020-04-02', '2020-04-04', '10:30:00', '20:00:00', 'comiccon@gamil.com');
