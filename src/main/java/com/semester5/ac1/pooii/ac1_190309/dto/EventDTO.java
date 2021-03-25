@@ -3,6 +3,8 @@ package com.semester5.ac1.pooii.ac1_190309.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.semester5.ac1.pooii.ac1_190309.entities.Event;
+
 public class EventDTO {
 
     private String name;
@@ -29,6 +31,18 @@ public class EventDTO {
         this.end_time = end_time;
         this.email = email;
     }
+    
+    public EventDTO(Event event) {
+        this.name = event.getName();
+        this.description = event.getDescription();
+        this.place = event.getPlace();
+        this.start_date = event.getStart_date();
+        this.end_date = event.getEnd_date();
+        this.start_time = event.getStart_time();
+        this.end_time = event.getEnd_time();
+        this.email = event.getEmail();
+    }
+
     public String getName() {
         return name;
     }
