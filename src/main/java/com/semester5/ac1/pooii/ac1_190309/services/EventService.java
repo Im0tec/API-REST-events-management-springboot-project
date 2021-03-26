@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.semester5.ac1.pooii.ac1_190309.dto.EventDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.EventUpdateDTO;
 import com.semester5.ac1.pooii.ac1_190309.entities.Event;
 import com.semester5.ac1.pooii.ac1_190309.repositories.EventRepository;
 
@@ -67,6 +70,27 @@ public class EventService {
         return new EventDTO(entity);
     }
 
+    public EventDTO update(Long id, EventUpdateDTO dto){
+
+        try{
+
+            Event entity = repository.getOne(id);
+
+            entity.setName(dto.getName());
+            entity.setDescription(dto.getDescription());
+            entity.setEmail(dto.getEmail());
+
+            entity = repository.save(entity);
+
+            return new EventDTO(entity);
+        }
+        catch(EntityNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+        }
+
+        
+    }
+
     public void registerCheckControl(LocalDate init_date, LocalDate end_date, LocalTime init_time, LocalTime end_time, Event event, List<Event> events){
 
         //Check if an event has been already registred.
@@ -92,4 +116,5 @@ public class EventService {
         }
 
     }
+
 }
