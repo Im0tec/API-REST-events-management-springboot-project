@@ -3,12 +3,15 @@ package com.semester5.ac1.pooii.ac1_190309.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.semester5.ac1.pooii.ac1_190309.dto.EventRegisterDTO;
 
 @Entity
 @Table(name="TB_EVENT")
@@ -28,6 +31,24 @@ public class Event implements Serializable{
     private LocalTime start_time;
     private LocalTime end_time;
     private String email;
+
+    public Event() {
+       
+    }
+
+    public Event(EventRegisterDTO dto) {
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.place = dto.getPlace();
+        this.start_date = LocalDate.parse(dto.getStart_date(), formatter);
+        this.end_date = LocalDate.parse(dto.getEnd_date(), formatter);
+        this.start_time = LocalTime.parse(dto.getStart_time());
+        this.end_time = LocalTime.parse(dto.getEnd_time());
+        this.email = dto.getEmail();
+    }
 
     public Long getId() {
         return id;

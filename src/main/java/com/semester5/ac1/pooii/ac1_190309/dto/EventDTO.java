@@ -1,7 +1,7 @@
 package com.semester5.ac1.pooii.ac1_190309.dto;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import com.semester5.ac1.pooii.ac1_190309.entities.Event;
 
@@ -10,8 +10,8 @@ public class EventDTO {
     private String name;
     private String description;
     private String place;
-    private LocalDate start_date;
-    private LocalDate end_date;
+    private String start_date;
+    private String end_date;
     private LocalTime start_time;
     private LocalTime end_time;
     private String email;
@@ -20,7 +20,7 @@ public class EventDTO {
 
     }
     
-    public EventDTO(String name, String description, String place, LocalDate start_date, LocalDate end_date,
+    public EventDTO(String name, String description, String place, String start_date, String end_date,
             LocalTime start_time, LocalTime end_time, String email) {
         this.name = name;
         this.description = description;
@@ -31,13 +31,17 @@ public class EventDTO {
         this.end_time = end_time;
         this.email = email;
     }
-    
+
     public EventDTO(Event event) {
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        //String formattedString = localDate.format(formatter);
+
         this.name = event.getName();
         this.description = event.getDescription();
         this.place = event.getPlace();
-        this.start_date = event.getStart_date();
-        this.end_date = event.getEnd_date();
+        this.start_date = event.getStart_date().format(formatter);
+        this.end_date = event.getEnd_date().format(formatter);
         this.start_time = event.getStart_time();
         this.end_time = event.getEnd_time();
         this.email = event.getEmail();
@@ -75,19 +79,19 @@ public class EventDTO {
         this.place = place;
     }
 
-    public LocalDate getStart_date() {
+    public String getStart_date() {
         return start_date;
     }
 
-    public void setStart_date(LocalDate start_date) {
+    public void setStart_date(String start_date) {
         this.start_date = start_date;
     }
 
-    public LocalDate getEnd_date() {
+    public String getEnd_date() {
         return end_date;
     }
 
-    public void setEnd_date(LocalDate end_date) {
+    public void setEnd_date(String end_date) {
         this.end_date = end_date;
     }
 

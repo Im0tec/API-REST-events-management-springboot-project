@@ -1,10 +1,14 @@
 package com.semester5.ac1.pooii.ac1_190309.services;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.semester5.ac1.pooii.ac1_190309.dto.EventDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.EventRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.entities.Event;
 import com.semester5.ac1.pooii.ac1_190309.repositories.EventRepository;
 
@@ -22,13 +26,22 @@ public class EventService {
 
     public List<EventDTO> getEvents(){
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
         List <Event> list = repository.findAll();
         List <EventDTO> listDTO = new ArrayList<>();
 
+        
         for(Event e: list){
             
-            EventDTO dto = new EventDTO(e.getName(), e.getDescription(), e.getPlace(), e.getStart_date(),
-            e.getEnd_date(), e.getStart_time(), e.getEnd_time(), e.getEmail());
+            EventDTO dto = new EventDTO(e.getName(), 
+                                        e.getDescription(), 
+                                        e.getPlace(),
+                                        e.getStart_date().format(formatter),
+                                        e.getEnd_date().format(formatter),
+                                        e.getStart_time(), 
+                                        e.getEnd_time(), 
+                                        e.getEmail());
             listDTO.add(dto);
 
         }
@@ -42,5 +55,41 @@ public class EventService {
         Event event = op.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
         
         return new EventDTO(event);
+    }
+
+    public EventDTO register(EventRegisterDTO dto){
+
+        Event entity = new Event(dto);
+
+        registerCheckControl(entity.getStart_date(), entity.getEnd_date(), entity.getStart_time(), entity.getEnd_time(), entity, repository.findAll());
+        entity = repository.save(entity);
+
+        return new EventDTO(entity);
+    }
+
+    public void registerCheckControl(LocalDate init_date, LocalDate end_date, LocalTime init_time, LocalTime end_time, Event event, List<Event> events){
+
+        //Check if an event has been already registred.
+        for(Event aux: events){
+
+            if(aux != event){
+
+                if(!(init_date.compareTo(aux.getStart_date()) < 0 && end_date.compareTo(aux.getEnd_date()) < 0) && !(end_date.compareTo(aux.getEnd_date()) > 0 && init_date.compareTo(aux.getEnd_date()) > 0)){
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! There is already an event registred on this date..."));
+                }
+                
+            }
+        }
+
+        //Check if event's start date is superior than end date.
+        if(end_date.compareTo(init_date) < 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! The end date must be superior than the start date..."));
+        }
+
+        //Check if an event has its schedules correctly inserted (End time superior than start time).
+        if(init_time.compareTo(end_time) > 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! The end time must be superior than the start time..."));
+        }
+
     }
 }
