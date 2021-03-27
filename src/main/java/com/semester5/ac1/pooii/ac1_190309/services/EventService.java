@@ -2,8 +2,6 @@ package com.semester5.ac1.pooii.ac1_190309.services;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +15,8 @@ import com.semester5.ac1.pooii.ac1_190309.repositories.EventRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,29 +28,11 @@ public class EventService {
     @Autowired
     private EventRepository repository;
 
-    public List<EventDTO> getEvents(){
+    public Page<EventDTO> getEvents(PageRequest pageRequest){
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        
-        List <Event> list = repository.findAll();
-        List <EventDTO> listDTO = new ArrayList<>();
+        Page <Event> list = repository.findEventPageable(pageRequest);
 
-        
-        for(Event e: list){
-            
-            EventDTO dto = new EventDTO(e.getName(), 
-                                        e.getDescription(), 
-                                        e.getPlace(),
-                                        e.getStart_date().format(formatter),
-                                        e.getEnd_date().format(formatter),
-                                        e.getStart_time(), 
-                                        e.getEnd_time(), 
-                                        e.getEmail());
-            listDTO.add(dto);
-
-        }
-
-        return listDTO;
+        return list.map( e -> new EventDTO(e) );
     }
 
     public EventDTO getEventById(Long id){
