@@ -1,5 +1,6 @@
 package com.semester5.ac1.pooii.ac1_190309.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -15,6 +16,7 @@ public class EventUpdateDTO {
 
     @NotBlank(message = "Type an email")
     @Size(min = 3, max = 100, message = "Email requires a minimum of 3 characters and a maximum of 100")
+    @Email
     private String email;
 
     public String getName() {
