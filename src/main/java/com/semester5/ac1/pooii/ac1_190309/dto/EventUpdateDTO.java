@@ -1,3 +1,7 @@
+/*
+ * NOME: Eduardo Campos Gonçalves - 190309
+ * TURMA: CP108LPIN2
+ */
 package com.semester5.ac1.pooii.ac1_190309.dto;
 
 import javax.validation.constraints.Email;
