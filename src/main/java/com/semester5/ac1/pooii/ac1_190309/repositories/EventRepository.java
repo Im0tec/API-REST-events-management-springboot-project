@@ -4,6 +4,7 @@
  */
 package com.semester5.ac1.pooii.ac1_190309.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.semester5.ac1.pooii.ac1_190309.entities.Event;
@@ -25,4 +26,13 @@ public interface EventRepository extends JpaRepository <Event,Long>{
             " ( LOWER(e.place)         LIKE     LOWER(CONCAT('%', :place, '%')))          AND" +
             " ( LOWER(e.description)   LIKE     LOWER(CONCAT('%', :description, '%')))       " )
     public Page<Event> findEventPageable(Pageable pageRequest, String name, String place, String description);
+
+    @Query( "SELECT e FROM Event e " +
+            "WHERE " +
+            " ( LOWER(e.name)          LIKE     LOWER(CONCAT('%', :name, '%')))           AND" + 
+            " ( LOWER(e.place)         LIKE     LOWER(CONCAT('%', :place, '%')))          AND" +
+            " ( LOWER(e.description)   LIKE     LOWER(CONCAT('%', :description, '%')))       " +
+            " ( c.startDate              >                        :startDate)                " )
+
+    public Page<Event> findEventPageable_Date(Pageable pageRequest, String name, String place, String description, LocalDate startDate);
 }
