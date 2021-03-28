@@ -35,7 +35,6 @@ public class EventDTO {
     public EventDTO(Event event) {
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        //String formattedString = localDate.format(formatter);
 
         this.name = event.getName();
         this.description = event.getDescription();

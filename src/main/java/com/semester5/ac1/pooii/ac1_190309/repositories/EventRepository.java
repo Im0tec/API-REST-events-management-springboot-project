@@ -15,6 +15,10 @@ public interface EventRepository extends JpaRepository <Event,Long>{
     
     List<Event> findByName(String name);
 
-    @Query("SELECT e FROM Event e")
-    public Page<Event> findEventPageable(Pageable pageRequest);
+    @Query("SELECT e FROM Event e " +
+            "WHERE " +
+            " ( LOWER(e.name)          LIKE     LOWER(CONCAT('%', :name, '%')))           AND" + 
+            " ( LOWER(e.place)         LIKE     LOWER(CONCAT('%', :place, '%')))          AND" +
+            " ( LOWER(e.description)   LIKE     LOWER(CONCAT('%', :description, '%')))       " )
+    public Page<Event> findEventPageable(Pageable pageRequest, String name, String place, String description);
 }
