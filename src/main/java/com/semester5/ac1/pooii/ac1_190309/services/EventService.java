@@ -34,7 +34,7 @@ public class EventService {
 
     public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, LocalDate date){
 
-        //If string is empty, it means date was not searched
+        //If date is null, it means date was not searched
         if(date == null){
             Page <Event> list = repository.findEventPageable(pageRequest, name, place, description);
             return list.map( e -> new EventDTO(e) );
@@ -97,26 +97,36 @@ public class EventService {
 
     public void registerCheckControl(LocalDate init_date, LocalDate end_date, LocalTime init_time, LocalTime end_time, Event event, List<Event> events){
 
+        //Check if event's end date is superior than start date.
+        if(end_date.compareTo(init_date) < 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("'Time is relative, okay? It can stretch and it can squeeze, but… it can’t run backwards. Just can’t.'       Invalid! The end date must be superior than start date..."));
+        }
+
+        //Check if an event has its schedules correctly inserted (Start time superior than end time).
+        if(init_time.compareTo(end_time) > 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  'Time is relative, okay? It can stretch and it can squeeze, but… it can’t run backwards. Just can’t.'       Invalid! The end time must be superior than start time..."));
+        }
+
+        //Check if start date is superior than system date.
+        if(init_date.compareTo(LocalDate.now()) < 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  'Wait a minute, Doc. Are you telling me you built a time machine....out of DeLorean?'       Invalid! The start date must be superior than system date..."));
+        }
+
+        //Check if end date is superior than system date.
+        if(end_date.compareTo(LocalDate.now()) < 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  'Wait a minute, Doc. Are you telling me you built a time machine....out of DeLorean?'       Invalid! The end date must be superior than system date..."));
+        }
+
         //Check if an event has been already registred.
         for(Event aux: events){
 
             if(aux != event){
 
                 if(!(init_date.compareTo(aux.getStart_date()) < 0 && end_date.compareTo(aux.getEnd_date()) < 0) && !(end_date.compareTo(aux.getEnd_date()) > 0 && init_date.compareTo(aux.getEnd_date()) > 0)){
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! There is already an event registred on this date..."));
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("'Same matter can not occupy same space...'       Invalid! There is already an event registred on this date..."));
                 }
                 
             }
-        }
-
-        //Check if event's start date is superior than end date.
-        if(end_date.compareTo(init_date) < 0){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! The end date must be superior than the start date..."));
-        }
-
-        //Check if an event has its schedules correctly inserted (End time superior than start time).
-        if(init_time.compareTo(end_time) > 0){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! The end time must be superior than the start time..."));
         }
 
     }
