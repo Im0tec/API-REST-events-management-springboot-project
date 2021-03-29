@@ -6,6 +6,7 @@ package com.semester5.ac1.pooii.ac1_190309.services;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,15 +33,16 @@ public class EventService {
     @Autowired
     private EventRepository repository;
 
-    public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, LocalDate date){
+    public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, String date){
 
-        //If date is null, it means date was not searched
-        if(date == null){
+        //If date is empty, it means date was not searched
+        if(date.isEmpty()){
             Page <Event> list = repository.findEventPageable(pageRequest, name, place, description);
             return list.map( e -> new EventDTO(e) );
         }
         else{
-            Page<Event> list = repository.findEventPageable_Date(pageRequest, name, place, description, date);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            Page<Event> list = repository.findEventPageable_Date(pageRequest, name, place, description, LocalDate.parse(date,formatter));
             return list.map( e -> new EventDTO(e) );
         }
     }

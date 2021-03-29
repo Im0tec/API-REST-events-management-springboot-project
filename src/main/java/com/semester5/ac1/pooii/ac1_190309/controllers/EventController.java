@@ -5,8 +5,6 @@
 
 package com.semester5.ac1.pooii.ac1_190309.controllers;
 
-import java.time.LocalDate;
-
 import javax.validation.Valid;
 
 import com.semester5.ac1.pooii.ac1_190309.dto.EventDTO;
@@ -18,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,8 +44,7 @@ public class EventController {
         @RequestParam(value = "name", defaultValue = "") String name,
         @RequestParam(value = "place", defaultValue = "") String place,
         @RequestParam(value = "description", defaultValue = "") String description,
-        @RequestParam(value = "startDate", required = false)
-        @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date
+        @RequestParam(value = "startDate", defaultValue = "") String date
     ){
 
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
