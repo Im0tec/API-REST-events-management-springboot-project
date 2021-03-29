@@ -32,7 +32,7 @@ public interface EventRepository extends JpaRepository <Event,Long>{
             " ( LOWER(e.name)          LIKE     LOWER(CONCAT('%', :name, '%')))           AND" + 
             " ( LOWER(e.place)         LIKE     LOWER(CONCAT('%', :place, '%')))          AND" +
             " ( LOWER(e.description)   LIKE     LOWER(CONCAT('%', :description, '%')))    AND" +
-            " ( e.start_date              >                        :startDate)                " )
+            " ( e.start_date             >                        :startDate)                " )
 
     public Page<Event> findEventPageable_Date(Pageable pageRequest, String name, String place, String description, LocalDate startDate);
 }

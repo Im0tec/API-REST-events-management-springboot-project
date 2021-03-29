@@ -7,6 +7,7 @@ package com.semester5.ac1.pooii.ac1_190309.services;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,8 +43,14 @@ public class EventService {
         }
         else{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            Page<Event> list = repository.findEventPageable_Date(pageRequest, name, place, description, LocalDate.parse(date,formatter));
-            return list.map( e -> new EventDTO(e) );
+            
+            try{
+                Page<Event> list = repository.findEventPageable_Date(pageRequest, name, place, description, LocalDate.parse(date,formatter));
+                return list.map( e -> new EventDTO(e) );
+            }
+            catch(DateTimeParseException e){
+                throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "  ''That's what i'm trying to tell you, kid. It ain't there. It's been totally blown away''       Invalid! Insert the date correctly (dd/MM/yyyy)");
+            }
         }
     }
 
@@ -57,12 +64,17 @@ public class EventService {
 
     public EventDTO register(EventRegisterDTO dto){
 
-        Event entity = new Event(dto);
-
-        registerCheckControl(entity.getStart_date(), entity.getEnd_date(), entity.getStart_time(), entity.getEnd_time(), entity, repository.findAll());
-        entity = repository.save(entity);
-
-        return new EventDTO(entity);
+        try{
+            Event entity = new Event(dto);
+    
+            registerCheckControl(entity.getStart_date(), entity.getEnd_date(), entity.getStart_time(), entity.getEnd_time(), entity, repository.findAll());
+            entity = repository.save(entity);
+    
+            return new EventDTO(entity);
+        }
+        catch(DateTimeParseException e){
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "  ''That's what i'm trying to tell you, kid. It ain't there. It's been totally blown away''       Invalid! Insert the date correctly (dd/MM/yyyy)");
+        }
     }
 
     public EventDTO update(Long id, EventUpdateDTO dto){
@@ -101,22 +113,22 @@ public class EventService {
 
         //Check if event's end date is superior than start date.
         if(end_date.compareTo(init_date) < 0){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("'Time is relative, okay? It can stretch and it can squeeze, but… it can’t run backwards. Just can’t.'       Invalid! The end date must be superior than start date..."));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Time is relative, okay? It can stretch and it can squeeze, but… it can’t run backwards. Just can’t.''       Invalid! The end date must be superior than start date..."));
         }
 
         //Check if an event has its schedules correctly inserted (Start time superior than end time).
         if(init_time.compareTo(end_time) > 0){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  'Time is relative, okay? It can stretch and it can squeeze, but… it can’t run backwards. Just can’t.'       Invalid! The end time must be superior than start time..."));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Time is relative, okay? It can stretch and it can squeeze, but… it can’t run backwards. Just can’t.''       Invalid! The end time must be superior than start time..."));
         }
 
         //Check if start date is superior than system date.
         if(init_date.compareTo(LocalDate.now()) < 0){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  'Wait a minute, Doc. Are you telling me you built a time machine....out of DeLorean?'       Invalid! The start date must be superior than system date..."));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Wait a minute, Doc. Are you telling me you built a time machine....out of DeLorean?''       Invalid! The start date must be superior than system date..."));
         }
 
         //Check if end date is superior than system date.
         if(end_date.compareTo(LocalDate.now()) < 0){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  'Wait a minute, Doc. Are you telling me you built a time machine....out of DeLorean?'       Invalid! The end date must be superior than system date..."));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Wait a minute, Doc. Are you telling me you built a time machine....out of DeLorean?''       Invalid! The end date must be superior than system date..."));
         }
 
         //Check if an event has been already registred.
@@ -125,7 +137,7 @@ public class EventService {
             if(aux != event){
 
                 if(!(init_date.compareTo(aux.getStart_date()) < 0 && end_date.compareTo(aux.getEnd_date()) < 0) && !(end_date.compareTo(aux.getEnd_date()) > 0 && init_date.compareTo(aux.getEnd_date()) > 0)){
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("'Same matter can not occupy same space...'       Invalid! There is already an event registred on this date..."));
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Same matter can not occupy same space...''       Invalid! There is already an event registred on this date..."));
                 }
                 
             }
