@@ -1,5 +1,9 @@
 /*
- * NOME: Eduardo Campos Gonçalves - 190309
+ * DUPLA:
+ *  
+ * Eduardo Campos Gonçalves - 190309
+ * Johanna Bernecker - 190737
+ * 
  * TURMA: CP108LPIN2
  */
 package com.semester5.ac1.pooii.ac1_190309.dto;
@@ -13,27 +17,29 @@ public class EventDTO {
 
     private String name;
     private String description;
-    private String place;
     private String start_date;
     private String end_date;
     private LocalTime start_time;
     private LocalTime end_time;
     private String email;
+
+    private String place;
+    //private List<Place> places = new ArrayList<>();
     
     public EventDTO(){
 
     }
-    
-    public EventDTO(String name, String description, String place, String start_date, String end_date,
-            LocalTime start_time, LocalTime end_time, String email) {
+
+    public EventDTO(String name, String description, String start_date, String end_date, LocalTime start_time,
+            LocalTime end_time, String email, String place) {
         this.name = name;
         this.description = description;
-        this.place = place;
         this.start_date = start_date;
         this.end_date = end_date;
         this.start_time = start_time;
         this.end_time = end_time;
         this.email = email;
+        this.place = place;
     }
 
     public EventDTO(Event event) {

@@ -8,3 +8,5 @@ INSERT INTO tb_event (name, description, place, start_date, end_date, start_time
 INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email) VALUES ('Rock in Rio', 'Evento de rock paulera', 'Rio de Janeiro', '2021-10-04', '2021-10-06', '10:30:00', '23:30:00', 'rockinrio@yahoo.com.br');
 INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email) VALUES ('E3', 'Electronic Entertainment Expo', 'Los Angeles', '2020-06-09', '2020-06-11', '10:30:00', '20:30:00', 'E3@gamerevent.com');
 INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email) VALUES ('Sculpture Projects Münster', 'Evento de arte', 'Alemanha', '2022-07-10', '2022-08-01', '12:00:00', '20:00:00', 'SculptureMunster@gmail.com');
+
+INSERT INTO tb_place (name, address) VALUES ('Anzu', 'Indaiatuba');

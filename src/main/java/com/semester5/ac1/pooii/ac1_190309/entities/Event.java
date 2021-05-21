@@ -1,5 +1,9 @@
 /*
- * NOME: Eduardo Campos Gonçalves - 190309
+ * DUPLA:
+ *  
+ * Eduardo Campos Gonçalves - 190309
+ * Johanna Bernecker - 190737
+ * 
  * TURMA: CP108LPIN2
  */
 package com.semester5.ac1.pooii.ac1_190309.entities;
@@ -13,6 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.semester5.ac1.pooii.ac1_190309.dto.EventRegisterDTO;
@@ -27,15 +32,24 @@ public class Event implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    
     private String name;
     private String description;
-    private String place;
     private LocalDate start_date;
     private LocalDate end_date;
     private LocalTime start_time;
     private LocalTime end_time;
     private String email;
+    private Long amountFreeTickets;
+    private Long amountPayedTickets;
+    private Double priceTicket;
+    private String place;
+    @ManyToOne
+    private Admin admin;
 
+    /*@ManyToMany(mappedBy = "events")
+    private List<Place> places = new ArrayList<>();*/
+    
     public Event() {
        
     }
@@ -46,12 +60,31 @@ public class Event implements Serializable{
         
         this.name = dto.getName();
         this.description = dto.getDescription();
-        this.place = dto.getPlace();
         this.start_date = LocalDate.parse(dto.getStart_date(), formatter);
         this.end_date = LocalDate.parse(dto.getEnd_date(), formatter);
         this.start_time = LocalTime.parse(dto.getStart_time());
         this.end_time = LocalTime.parse(dto.getEnd_time());
         this.email = dto.getEmail();
+        this.place = dto.getPlace();
+    }
+
+    
+
+    public Event(Long id, String name, String description, LocalDate start_date, LocalDate end_date,
+            LocalTime start_time, LocalTime end_time, String email, Long amountFreeTickets, Long amountPayedTickets,
+            Double priceTicket, Admin admin) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.email = email;
+        this.amountFreeTickets = amountFreeTickets;
+        this.amountPayedTickets = amountPayedTickets;
+        this.priceTicket = priceTicket;
+        this.admin = admin;
     }
 
     public Long getId() {
@@ -77,15 +110,15 @@ public class Event implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public String getPlace() {
         return place;
     }
-    
+
     public void setPlace(String place) {
         this.place = place;
     }
-    
+
     public LocalDate getStart_date() {
         return start_date;
     }
@@ -97,7 +130,7 @@ public class Event implements Serializable{
     public LocalDate getEnd_date() {
         return end_date;
     }
-    
+
     public void setEnd_date(LocalDate end_date) {
         this.end_date = end_date;
     }
@@ -124,6 +157,38 @@ public class Event implements Serializable{
     
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Long getAmountFreeTickets() {
+        return amountFreeTickets;
+    }
+
+    public void setAmountFreeTickets(Long amountFreeTickets) {
+        this.amountFreeTickets = amountFreeTickets;
+    }
+
+    public Long getAmountPayedTickets() {
+        return amountPayedTickets;
+    }
+
+    public void setAmountPayedTickets(Long amountPayedTickets) {
+        this.amountPayedTickets = amountPayedTickets;
+    }
+
+    public Double getPriceTicket() {
+        return priceTicket;
+    }
+
+    public void setPriceTicket(Double priceTicket) {
+        this.priceTicket = priceTicket;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
     @Override

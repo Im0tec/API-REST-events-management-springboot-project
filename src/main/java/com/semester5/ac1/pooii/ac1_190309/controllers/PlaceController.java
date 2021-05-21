@@ -6,15 +6,14 @@
  * 
  * TURMA: CP108LPIN2
  */
-
 package com.semester5.ac1.pooii.ac1_190309.controllers;
 
 import javax.validation.Valid;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.EventDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.EventRegisterDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.EventUpdateDTO;
-import com.semester5.ac1.pooii.ac1_190309.services.EventService;
+import com.semester5.ac1.pooii.ac1_190309.dto.PlaceDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.PlaceRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.PlaceUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.services.PlaceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,49 +31,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/events")
-public class EventController {
+@RequestMapping("/places")
+public class PlaceController {
     
     @Autowired
-    private EventService service;
+    private PlaceService service;
 
     @GetMapping
-    public ResponseEntity<Page<EventDTO>> getEvents(
+    public ResponseEntity<Page<PlaceDTO>> getPlaces(
 
         @RequestParam(value = "page", defaultValue = "0") Integer page,
         @RequestParam(value = "linesPerPage", defaultValue = "6") Integer linesPerPage,
         @RequestParam(value = "direction", defaultValue = "ASC") String direction,
         @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
         @RequestParam(value = "name", defaultValue = "") String name,
-        @RequestParam(value = "place", defaultValue = "") String place,
-        @RequestParam(value = "description", defaultValue = "") String description,
-        @RequestParam(value = "startDate", defaultValue = "") String date
-    ){
+        @RequestParam(value = "address", defaultValue = "") String address
 
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-        Page <EventDTO> list = service.getEvents(pageRequest, name, place, description, date);
+    ){
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+        Page<PlaceDTO> list = service.getPlaces(pageRequest, name, address);
 
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<EventDTO> getEventById(@PathVariable Long id){
+    public ResponseEntity<PlaceDTO> getPlaceById(@PathVariable Long id){
         
-        EventDTO dto = service.getEventById(id);
+        PlaceDTO dto = service.getPlaceById(id);
 
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<EventDTO> register(@Valid @RequestBody EventRegisterDTO registerDTO){
+    public ResponseEntity<PlaceDTO> register(@Valid @RequestBody PlaceRegisterDTO registerDTO){
 
         return ResponseEntity.ok(service.register(registerDTO));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<EventDTO> update(@PathVariable Long id, @Valid @RequestBody EventUpdateDTO updateDto){
+    public ResponseEntity<PlaceDTO> update(@PathVariable Long id, @Valid @RequestBody PlaceUpdateDTO updateDto){
 
-        EventDTO dto = service.update(id, updateDto);
+        PlaceDTO dto = service.update(id, updateDto);
 
         return ResponseEntity.ok().body(dto);
     }
