@@ -1,3 +1,5 @@
+
+--TB_EVENT
 INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email) VALUES ('Comic con', 'Evento nerd', 'São Paulo', '2020-04-02', '2020-04-04', '10:30:00', '22:00:00', 'comiccon@gmail.com.br');
 INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email) VALUES ('BGS', 'Evento gamer', 'São Paulo', '2020-12-01', '2020-12-05', '9:00:00', '22:00:00', 'BGS@gmail.com.br');
 INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email) VALUES ('Roadsec', 'Evento nacional de hacking, segurança e tecnologia', 'Rio de Janeiro', '2021-07-22', '2021-07-27', '12:00:00', '20:30:00', 'Roadsec@yahoo.com.br');
@@ -9,8 +11,15 @@ INSERT INTO tb_event (name, description, place, start_date, end_date, start_time
 INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email) VALUES ('E3', 'Electronic Entertainment Expo', 'Los Angeles', '2020-06-09', '2020-06-11', '10:30:00', '20:30:00', 'E3@gamerevent.com');
 INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email) VALUES ('Sculpture Projects Münster', 'Evento de arte', 'Alemanha', '2022-07-10', '2022-08-01', '12:00:00', '20:00:00', 'SculptureMunster@gmail.com');
 
+--TB_PLACE
 INSERT INTO tb_place (name, address) VALUES ('Anzu', 'Indaiatuba');
 
+--TB_BASEUSER
 INSERT INTO tb_baseuser (name, email) VALUES ('Eduardo', 'edu@edu');
+INSERT INTO tb_baseuser (name, email) VALUES ('Frate', 'frate@frate');
 
+--TB_ADMIN
 INSERT INTO tb_admin (phone_number, baseuser_id) VALUES ('(11)983661517', 1);
+
+--TB_ATTEND
+Insert INTO tb_attend (balance, baseuser_id) VALUES (120.50, 2);

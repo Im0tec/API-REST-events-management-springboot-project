@@ -2,10 +2,10 @@ package com.semester5.ac1.pooii.ac1_190309.controllers;
 
 import javax.validation.Valid;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.AdminDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.AdminRegisterDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.AdminUpdateDTO;
-import com.semester5.ac1.pooii.ac1_190309.services.AdminService;
+import com.semester5.ac1.pooii.ac1_190309.dto.AttendDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AttendRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AttendUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.services.AttendService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,45 +23,45 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admins")
-public class AdminController {
+@RequestMapping("/attendees")
+public class AttendController {
     
     @Autowired
-    private AdminService service;
+    private AttendService service;
 
     @GetMapping
-    public ResponseEntity<Page<AdminDTO>> getAdmins(
+    public ResponseEntity<Page<AttendDTO>> getAttendees(
         
         @RequestParam(value = "page", defaultValue = "0") Integer page,
         @RequestParam(value = "linesPerPage", defaultValue = "6") Integer linesPerPage,
         @RequestParam(value = "direction", defaultValue = "ASC") String direction,
         @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
-        @RequestParam(value = "phone", defaultValue = "") String phone
+        @RequestParam(value = "balance", defaultValue = "") Double balance
     ){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-        Page<AdminDTO> list = service.getAdmins(pageRequest, phone);
+        Page<AttendDTO> list = service.getAttendees(pageRequest, balance);
 
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<AdminDTO> getAdminById(@PathVariable Long id){
+    public ResponseEntity<AttendDTO> getAttendById(@PathVariable Long id){
         
-        AdminDTO dto = service.getAdminById(id);
+        AttendDTO dto = service.getAttendById(id);
 
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<AdminDTO> register(@Valid @RequestBody AdminRegisterDTO registerDTO){
+    public ResponseEntity<AttendDTO> register(@Valid @RequestBody AttendRegisterDTO registerDTO){
 
         return ResponseEntity.ok(service.register(registerDTO));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<AdminDTO> update(@PathVariable Long id, @Valid @RequestBody AdminUpdateDTO updateDto){
+    public ResponseEntity<AttendDTO> update(@PathVariable Long id, @Valid @RequestBody AttendUpdateDTO updateDto){
 
-        AdminDTO dto = service.update(id, updateDto);
+        AttendDTO dto = service.update(id, updateDto);
 
         return ResponseEntity.ok().body(dto);
     }

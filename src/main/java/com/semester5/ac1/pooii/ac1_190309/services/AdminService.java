@@ -11,6 +11,7 @@ import com.semester5.ac1.pooii.ac1_190309.entities.Admin;
 import com.semester5.ac1.pooii.ac1_190309.repositories.AdminRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -69,6 +70,17 @@ public class AdminService {
         catch(EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin not found");
         }
+    }
+
+    public void delete(Long id){
+
+        try{
+            repository.deleteById(id);
+        }
+        catch(EmptyResultDataAccessException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin not found");
+        }
+        
     }
     
 }

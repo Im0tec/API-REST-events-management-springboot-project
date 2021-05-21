@@ -10,11 +10,13 @@ public class AdminDTO {
 
     public AdminDTO() {
     }
-
-    public AdminDTO(String phoneNumber) {
+    
+    public AdminDTO(String name, String email, String phoneNumber) {
+        this.name = name;
+        this.email = email;
         this.phoneNumber = phoneNumber;
     }
-    
+
     public AdminDTO(Admin admin) {
         this.name = admin.getName();
         this.email = admin.getEmail();

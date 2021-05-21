@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.semester5.ac1.pooii.ac1_190309.dto.AttendRegisterDTO;
+
 @Entity
 @Table(name = "TB_ATTEND")
 @PrimaryKeyJoinColumn(name = "BASEUSER_ID")
@@ -29,6 +31,11 @@ public class Attend extends BaseUser {
     public Attend(String name, String email, Double balance) {
         super(name, email);
         this.balance = balance;
+    }
+
+    public Attend(AttendRegisterDTO attend) {
+        super(attend.getName(), attend.getEmail());
+        this.balance = attend.getBalance();
     }
 
     public Double getBalance() {
