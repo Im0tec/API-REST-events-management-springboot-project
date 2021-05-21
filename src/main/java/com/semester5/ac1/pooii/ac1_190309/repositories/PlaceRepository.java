@@ -15,9 +15,9 @@ public interface PlaceRepository extends JpaRepository <Place, Long>{
     
     List<Place> findByName(String name);
 
-    @Query("SELECT e FROM Place e " +
+    @Query("SELECT p FROM Place p " +
             "WHERE " +
-            " ( LOWER(e.name)          LIKE     LOWER(CONCAT('%', :name, '%')))           AND" + 
-            " ( LOWER(e.address)         LIKE     LOWER(CONCAT('%', :address, '%')))             " )
+            " ( LOWER(p.name)          LIKE     LOWER(CONCAT('%', :name, '%')))           AND" + 
+            " ( LOWER(p.address)       LIKE     LOWER(CONCAT('%', :address, '%')))           " )
     public Page<Place> findPlacesPageable(Pageable pageRequest, String name, String address);
 }

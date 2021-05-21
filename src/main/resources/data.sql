@@ -10,3 +10,7 @@ INSERT INTO tb_event (name, description, place, start_date, end_date, start_time
 INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email) VALUES ('Sculpture Projects Münster', 'Evento de arte', 'Alemanha', '2022-07-10', '2022-08-01', '12:00:00', '20:00:00', 'SculptureMunster@gmail.com');
 
 INSERT INTO tb_place (name, address) VALUES ('Anzu', 'Indaiatuba');
+
+INSERT INTO tb_baseuser (name, email) VALUES ('Eduardo', 'edu@edu');
+
+INSERT INTO tb_admin (phone_number, baseuser_id) VALUES ('(11)983661517', 1);

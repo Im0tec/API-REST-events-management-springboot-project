@@ -26,8 +26,8 @@ public class Attend extends BaseUser {
         this.balance = balance;
     }
 
-    public Attend(Long id, String name, String email, Double balance) {
-        super(id, name, email);
+    public Attend(String name, String email, Double balance) {
+        super(name, email);
         this.balance = balance;
     }
 

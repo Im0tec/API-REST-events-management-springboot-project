@@ -43,10 +43,12 @@ public class Event implements Serializable{
     private Long amountFreeTickets;
     private Long amountPayedTickets;
     private Double priceTicket;
+
     private String place;
+
     @ManyToOne
     private Admin admin;
-
+    
     /*@ManyToMany(mappedBy = "events")
     private List<Place> places = new ArrayList<>();*/
     

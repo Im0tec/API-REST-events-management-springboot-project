@@ -25,7 +25,7 @@ public class BaseUser implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
     private String name;
     private String email;
@@ -33,18 +33,17 @@ public class BaseUser implements Serializable {
     public BaseUser() {
     }
 
-    public BaseUser(Long id, String name, String email) {
-        this.id = id;
+    public BaseUser(String name, String email) {
         this.name = name;
         this.email = email;
     }
 
     public Long getId() {
-        return id;
+        return Id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.Id = id;
     }
 
     public String getName() {
@@ -67,7 +66,7 @@ public class BaseUser implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((Id == null) ? 0 : Id.hashCode());
         return result;
     }
 
@@ -80,10 +79,10 @@ public class BaseUser implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         BaseUser other = (BaseUser) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (Id == null) {
+            if (other.Id != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!Id.equals(other.Id))
             return false;
         return true;
     }
