@@ -1,3 +1,11 @@
+/*
+ * DUPLA:
+ *  
+ * Eduardo Campos Gonçalves - 190309
+ * Johanna Bernecker - 190737
+ * 
+ * TURMA: CP108LPIN2
+ */
 package com.semester5.ac1.pooii.ac1_190309.repositories;
 
 import java.util.List;
