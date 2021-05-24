@@ -4,6 +4,9 @@ Eduardo Campos Gonçalves - 190309
 Johanna Bernecker - 190737
 
 ### Link da aplicação no Heroku  
+  
+*O link continua da ac1 pois fiquei receoso de alterá-lo e o projeto de alguma forma bugar e parar de funcionar*  
+  
 https://semester5-ac1-poolab-190309.herokuapp.com/
 ### Estilos dos JSON's de requisição (POST)
   
