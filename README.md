@@ -4,6 +4,9 @@ Eduardo Campos Gonçalves - 190309
 Johanna Bernecker - 190737
 
 ### Link da aplicação no Heroku  
+  
+*O link continua da ac1 pois fiquei receoso de alterá-lo e o projeto de alguma forma bugar e parar de funcionar*  
+  
 https://semester5-ac1-poolab-190309.herokuapp.com/
 ### Estilos dos JSON's de requisição (POST)
   
@@ -21,6 +24,9 @@ como estava para não retornar uma valor null no banco de dados. Porém, no cód
   "start_time": "hh:MM",  
   "end_time": "hh:MM",  
   "email": "Event email here",  
+  "amountFreeTickets": "Free tickets here",  
+  "amountPayedTickets": "Payed tickets here",  
+  "priceTicket": "Price ticket here",  
   "adminId": "Event admin id here"  
 }  
 ```
@@ -35,7 +41,7 @@ como estava para não retornar uma valor null no banco de dados. Porém, no cód
 ```json
 {
     "name": "Admin name here",
-    "email": "Admin name here",
+    "email": "Admin email here",
     "phoneNumber": "Admin name here"
 }
 ```
