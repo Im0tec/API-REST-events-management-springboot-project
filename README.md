@@ -21,6 +21,9 @@ como estava para não retornar uma valor null no banco de dados. Porém, no cód
   "start_time": "hh:MM",  
   "end_time": "hh:MM",  
   "email": "Event email here",  
+  "amountFreeTickets": "Free tickets here",  
+  "amountPayedTickets": "Payed tickets here",  
+  "priceTicket": "Price ticket here",  
   "adminId": "Event admin id here"  
 }  
 ```
