@@ -8,7 +8,10 @@ Johanna Bernecker - 190737
 *O link continua da ac1 pois fiquei receoso de alterá-lo e o projeto de alguma forma bugar e parar de funcionar*  
   
 https://semester5-ac1-poolab-190309.herokuapp.com/
-### Estilos dos JSON's de requisição (POST)
+## Estilos dos JSON's de requisição
+  
+### POST  
+  
   
 **1. Event**  
   
@@ -52,4 +55,39 @@ como estava para não retornar uma valor null no banco de dados. Porém, no cód
     "email": "Attend email here",  
     "balance": "Attend balance here"  
 }  
+```
+-------
+### PUT  
+  
+  
+ **1. Event**  
+  
+```json  
+{
+    "name": "New event name here",
+    "description": "New event description here",
+    "email": "New event email here"
+}
+```
+**2. Place**  
+```json
+{
+    "name": "New place name here"
+}
+```
+**3. Admin**  
+```json
+{
+    "name": "New admin name here",
+    "email": "New admin email here",
+    "phoneNumber": "New admin phone number here"
+}
+```
+**4. Attend**  
+```json
+{
+    "name": "New attend name here",
+    "email": "New attend email here",
+    "balance": "New attend balance here"
+}
 ```
