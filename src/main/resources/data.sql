@@ -1,4 +1,3 @@
-
 --TB_EVENT
 INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email, amount_free_tickets, amount_payed_tickets, price_ticket) VALUES ('Comic con', 'Evento nerd', 'São Paulo', '2020-04-02', '2020-04-04', '10:30:00', '22:00:00', 'comiccon@gmail.com.br',0,30000,200);
 INSERT INTO tb_event (name, description, place, start_date, end_date, start_time, end_time, email, amount_free_tickets, amount_payed_tickets, price_ticket) VALUES ('BGS', 'Evento gamer', 'São Paulo', '2020-12-01', '2020-12-05', '9:00:00', '22:00:00', 'BGS@gmail.com.br',0,2000,135);
