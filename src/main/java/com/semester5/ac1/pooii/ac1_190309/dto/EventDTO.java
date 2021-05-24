@@ -22,6 +22,9 @@ public class EventDTO {
     private LocalTime start_time;
     private LocalTime end_time;
     private String email;
+    private Long amountFreeTickets;
+    private Long amountPayedTickets;
+    private Double priceTicket;
 
     private String place;
     //private List<Place> places = new ArrayList<>();
@@ -31,7 +34,8 @@ public class EventDTO {
     }
 
     public EventDTO(String name, String description, String start_date, String end_date, LocalTime start_time,
-            LocalTime end_time, String email, String place) {
+            LocalTime end_time, String email, Long amountFreeTickets, Long amountPayedTickets, Double priceTicket,
+            String place) {
         this.name = name;
         this.description = description;
         this.start_date = start_date;
@@ -39,8 +43,13 @@ public class EventDTO {
         this.start_time = start_time;
         this.end_time = end_time;
         this.email = email;
+        this.amountFreeTickets = amountFreeTickets;
+        this.amountPayedTickets = amountPayedTickets;
+        this.priceTicket = priceTicket;
         this.place = place;
     }
+
+
 
     public EventDTO(Event event) {
         
@@ -54,6 +63,9 @@ public class EventDTO {
         this.start_time = event.getStart_time();
         this.end_time = event.getEnd_time();
         this.email = event.getEmail();
+        this.amountFreeTickets = event.getAmountFreeTickets();
+        this.amountPayedTickets = event.getAmountPayedTickets();
+        this.priceTicket = event.getPriceTicket();
     }
 
     public String getName() {
@@ -118,6 +130,30 @@ public class EventDTO {
 
     public void setEnd_time(LocalTime end_time) {
         this.end_time = end_time;
+    }
+
+    public Long getAmountFreeTickets() {
+        return amountFreeTickets;
+    }
+
+    public void setAmountFreeTickets(Long amountFreeTickets) {
+        this.amountFreeTickets = amountFreeTickets;
+    }
+
+    public Long getAmountPayedTickets() {
+        return amountPayedTickets;
+    }
+
+    public void setAmountPayedTickets(Long amountPayedTickets) {
+        this.amountPayedTickets = amountPayedTickets;
+    }
+
+    public Double getPriceTicket() {
+        return priceTicket;
+    }
+
+    public void setPriceTicket(Double priceTicket) {
+        this.priceTicket = priceTicket;
     }
 
 }
