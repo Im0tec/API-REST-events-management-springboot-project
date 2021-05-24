@@ -38,7 +38,7 @@ como estava para não retornar uma valor null no banco de dados. Porém, no cód
 ```json
 {
     "name": "Admin name here",
-    "email": "Admin name here",
+    "email": "Admin email here",
     "phoneNumber": "Admin name here"
 }
 ```
