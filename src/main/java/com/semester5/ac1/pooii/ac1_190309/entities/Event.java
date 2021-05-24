@@ -68,6 +68,10 @@ public class Event implements Serializable{
         this.end_time = LocalTime.parse(dto.getEnd_time());
         this.email = dto.getEmail();
         this.place = dto.getPlace();
+        this.amountFreeTickets = dto.getAmountFreeTickets();
+        this.amountPayedTickets = dto.getAmountPayedTickets();
+        this.priceTicket = dto.getPriceTicket();
+        //this.admin = dto.getAdminId();
     }
 
     

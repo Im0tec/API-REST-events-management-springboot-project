@@ -21,6 +21,7 @@ import com.semester5.ac1.pooii.ac1_190309.dto.EventDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventUpdateDTO;
 import com.semester5.ac1.pooii.ac1_190309.entities.Event;
+import com.semester5.ac1.pooii.ac1_190309.repositories.AdminRepository;
 import com.semester5.ac1.pooii.ac1_190309.repositories.EventRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class EventService {
     
     @Autowired
     private EventRepository repository;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
     public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, String date){
 
@@ -69,9 +73,10 @@ public class EventService {
     public EventDTO register(EventRegisterDTO dto){
 
         try{
-            checkPlaceExists(dto);
+            if(adminRepository.findById(dto.getAdminId()).isEmpty()){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The id inserted in ''adminID'' does not exist or does not belong to an administrator");
+            }
             Event entity = new Event(dto);
-    
             registerCheckControl(entity.getStart_date(), entity.getEnd_date(), entity.getStart_time(), entity.getEnd_time(), entity, repository.findAll());
             entity = repository.save(entity);
     
@@ -112,12 +117,6 @@ public class EventService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
         }
         
-    }
-
-    public void checkPlaceExists(EventRegisterDTO eventRegisterDTO){
-
-        //Coding...
-
     }
 
     public void registerCheckControl(LocalDate init_date, LocalDate end_date, LocalTime init_time, LocalTime end_time, Event event, List<Event> events){

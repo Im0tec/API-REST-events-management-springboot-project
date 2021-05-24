@@ -10,6 +10,7 @@ package com.semester5.ac1.pooii.ac1_190309.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class EventRegisterDTO {
@@ -41,6 +42,18 @@ public class EventRegisterDTO {
     @NotBlank(message = "Type an email")
     @Size(min = 3, max = 100, message = "Email requires a minimum of 3 characters and a maximum of 100")
     private String email;
+
+    @NotNull(message = "Insert amountFreeTickets")
+    private Long amountFreeTickets;
+
+    @NotNull(message = "Insert amountPayedTickets")
+    private Long amountPayedTickets;
+
+    @NotNull(message = "Insert ticket price")
+    private Double priceTicket;
+
+    @NotNull(message = "Type an adminId")
+    private Long adminId;
 
     public String getName() {
         return name;
@@ -105,6 +118,37 @@ public class EventRegisterDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
+    public Long getAmountFreeTickets() {
+        return amountFreeTickets;
+    }
+
+    public void setAmountFreeTickets(Long amountFreeTickets) {
+        this.amountFreeTickets = amountFreeTickets;
+    }
+
+    public Long getAmountPayedTickets() {
+        return amountPayedTickets;
+    }
+
+    public void setAmountPayedTickets(Long amountPayedTickets) {
+        this.amountPayedTickets = amountPayedTickets;
+    }
+
+    public Double getPriceTicket() {
+        return priceTicket;
+    }
+
+    public void setPriceTicket(Double priceTicket) {
+        this.priceTicket = priceTicket;
+    }
+
+    public Long getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Long adminId) {
+        this.adminId = adminId;
+    }
    
 }
