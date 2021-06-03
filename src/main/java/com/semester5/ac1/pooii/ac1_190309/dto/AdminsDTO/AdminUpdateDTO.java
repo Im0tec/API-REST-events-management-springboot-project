@@ -6,13 +6,13 @@
  * 
  * TURMA: CP108LPIN2
  */
-package com.semester5.ac1.pooii.ac1_190309.dto;
+package com.semester5.ac1.pooii.ac1_190309.dto.AdminsDTO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class AttendRegisterDTO {
-    
+public class AdminUpdateDTO {
+
     @NotBlank(message = "Type a name")
     @Size(min = 3, max = 100, message = "Name requires a minimum of 3 characters and a maximum of 100")
     private String name;
@@ -21,7 +21,9 @@ public class AttendRegisterDTO {
     @Size(min = 3, max = 100, message = "Email requires a minimum of 3 characters and a maximum of 100")
     private String email;
 
-    private Double balance;
+    @NotBlank(message = "Type a phone number")
+    @Size(min = 3, max = 100, message = "phone number requires a minimum of 3 characters and a maximum of 100")
+    private String phoneNumber;
 
     public String getName() {
         return name;
@@ -39,12 +41,13 @@ public class AttendRegisterDTO {
         this.email = email;
     }
 
-    public Double getBalance() {
-        return balance;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setBalance(Double balance) {
-        this.balance = balance;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
+    
 }

@@ -6,7 +6,7 @@
  * 
  * TURMA: CP108LPIN2
  */
-package com.semester5.ac1.pooii.ac1_190309.dto;
+package com.semester5.ac1.pooii.ac1_190309.dto.AdminsDTO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

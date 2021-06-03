@@ -20,7 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.EventRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventRegisterDTO;
 
 @Entity
 @Table(name="TB_EVENT")

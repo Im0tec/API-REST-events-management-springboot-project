@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.AttendRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AttendsDTO.AttendRegisterDTO;
 
 @Entity
 @Table(name = "TB_ATTEND")

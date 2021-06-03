@@ -6,20 +6,16 @@
  * 
  * TURMA: CP108LPIN2
  */
-package com.semester5.ac1.pooii.ac1_190309.dto;
+package com.semester5.ac1.pooii.ac1_190309.dto.PlacesDTO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class PlaceRegisterDTO {
+public class PlaceUpdateDTO {
     
     @NotBlank(message = "Type a name")
     @Size(min = 3, max = 100, message = "Name requires a minimum of 3 characters and a maximum of 100")
     private String name;
-
-    @NotBlank(message = "Type an address")
-    @Size(min = 3, max = 100, message = "Address requires a minimum of 3 characters and a maximum of 100")
-    private String address;
 
     public String getName() {
         return name;
@@ -27,14 +23,6 @@ public class PlaceRegisterDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     

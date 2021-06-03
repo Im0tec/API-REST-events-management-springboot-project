@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.AdminRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AdminsDTO.AdminRegisterDTO;
 
 @Entity
 @Table(name = "TB_ADMIN")

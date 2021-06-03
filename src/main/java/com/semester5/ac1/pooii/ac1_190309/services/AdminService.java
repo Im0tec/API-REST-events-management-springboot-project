@@ -10,9 +10,9 @@ package com.semester5.ac1.pooii.ac1_190309.services;
 
 import java.util.Optional;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.AdminDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.AdminRegisterDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.AdminUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AdminsDTO.AdminDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AdminsDTO.AdminRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AdminsDTO.AdminUpdateDTO;
 import com.semester5.ac1.pooii.ac1_190309.entities.Admin;
 import com.semester5.ac1.pooii.ac1_190309.repositories.AdminRepository;
 

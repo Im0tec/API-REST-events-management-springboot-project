@@ -12,9 +12,9 @@ import java.net.URI;
 
 import javax.validation.Valid;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.PlaceDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.PlaceRegisterDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.PlaceUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.PlacesDTO.PlaceDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.PlacesDTO.PlaceRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.PlacesDTO.PlaceUpdateDTO;
 import com.semester5.ac1.pooii.ac1_190309.services.PlaceService;
 
 import org.springframework.beans.factory.annotation.Autowired;

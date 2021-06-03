@@ -12,9 +12,9 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.AttendDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.AttendRegisterDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.AttendUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AttendsDTO.AttendDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AttendsDTO.AttendRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AttendsDTO.AttendUpdateDTO;
 import com.semester5.ac1.pooii.ac1_190309.entities.Attend;
 import com.semester5.ac1.pooii.ac1_190309.repositories.AttendRepository;
 

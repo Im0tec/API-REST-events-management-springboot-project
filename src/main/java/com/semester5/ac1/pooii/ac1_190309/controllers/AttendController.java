@@ -12,9 +12,9 @@ import java.net.URI;
 
 import javax.validation.Valid;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.AttendDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.AttendRegisterDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.AttendUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AttendsDTO.AttendDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AttendsDTO.AttendRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.AttendsDTO.AttendUpdateDTO;
 import com.semester5.ac1.pooii.ac1_190309.services.AttendService;
 
 import org.springframework.beans.factory.annotation.Autowired;

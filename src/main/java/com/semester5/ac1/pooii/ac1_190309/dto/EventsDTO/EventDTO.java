@@ -6,7 +6,7 @@
  * 
  * TURMA: CP108LPIN2
  */
-package com.semester5.ac1.pooii.ac1_190309.dto;
+package com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

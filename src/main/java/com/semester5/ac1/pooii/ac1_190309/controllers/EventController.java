@@ -13,9 +13,9 @@ import java.net.URI;
 
 import javax.validation.Valid;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.EventDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.EventRegisterDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.EventUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventUpdateDTO;
 import com.semester5.ac1.pooii.ac1_190309.services.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -18,7 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.PlaceRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.PlacesDTO.PlaceRegisterDTO;
 
 @Entity
 @Table(name = "TB_PLACE")

@@ -6,32 +6,32 @@
  * 
  * TURMA: CP108LPIN2
  */
-package com.semester5.ac1.pooii.ac1_190309.dto;
+package com.semester5.ac1.pooii.ac1_190309.dto.AdminsDTO;
 
-import com.semester5.ac1.pooii.ac1_190309.entities.Attend;
+import com.semester5.ac1.pooii.ac1_190309.entities.Admin;
 
-public class AttendDTO {
+public class AdminDTO {
     
     private Long id;
     private String name;
     private String email;
-    private Double balance;
-    
-    public AttendDTO() {
-    }
+    private String phoneNumber;
 
-    public AttendDTO(Long id, String name, String email, Double balance) {
+    public AdminDTO() {
+    }
+    
+    public AdminDTO(Long id, String name, String email, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.balance = balance;
+        this.phoneNumber = phoneNumber;
     }
 
-    public AttendDTO(Attend attend) {
-        this.id = attend.getId();
-        this.name = attend.getName();
-        this.email = attend.getEmail();
-        this.balance =  attend.getBalance();
+    public AdminDTO(Admin admin) {
+        this.id = admin.getId();
+        this.name = admin.getName();
+        this.email = admin.getEmail();
+        this.phoneNumber = admin.getPhoneNumber();
     }
 
     public Long getId() {
@@ -58,12 +58,12 @@ public class AttendDTO {
         this.email = email;
     }
 
-    public Double getBalance() {
-        return balance;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setBalance(Double balance) {
-        this.balance = balance;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
 }

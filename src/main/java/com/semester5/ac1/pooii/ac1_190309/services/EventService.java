@@ -17,9 +17,9 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
-import com.semester5.ac1.pooii.ac1_190309.dto.EventDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.EventRegisterDTO;
-import com.semester5.ac1.pooii.ac1_190309.dto.EventUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventUpdateDTO;
 import com.semester5.ac1.pooii.ac1_190309.entities.Event;
 import com.semester5.ac1.pooii.ac1_190309.repositories.AdminRepository;
 import com.semester5.ac1.pooii.ac1_190309.repositories.EventRepository;
