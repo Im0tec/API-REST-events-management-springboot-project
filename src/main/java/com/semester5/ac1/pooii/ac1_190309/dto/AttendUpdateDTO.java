@@ -21,8 +21,6 @@ public class AttendUpdateDTO {
     @Size(min = 3, max = 100, message = "Email requires a minimum of 3 characters and a maximum of 100")
     private String email;
 
-    private Double balance;
-
     public String getName() {
         return name;
     }
@@ -37,13 +35,5 @@ public class AttendUpdateDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
     }
 }

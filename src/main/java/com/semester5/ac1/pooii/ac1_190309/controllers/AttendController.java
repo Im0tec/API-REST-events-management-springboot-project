@@ -8,6 +8,8 @@
  */
 package com.semester5.ac1.pooii.ac1_190309.controllers;
 
+import java.net.URI;
+
 import javax.validation.Valid;
 
 import com.semester5.ac1.pooii.ac1_190309.dto.AttendDTO;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/attendees")
@@ -62,8 +65,11 @@ public class AttendController {
 
     @PostMapping
     public ResponseEntity<AttendDTO> register(@Valid @RequestBody AttendRegisterDTO registerDTO){
+        
+        AttendDTO dto = service.register(registerDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 
-        return ResponseEntity.ok(service.register(registerDTO));
+        return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping("{id}")

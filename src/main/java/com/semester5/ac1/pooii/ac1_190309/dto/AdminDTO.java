@@ -12,6 +12,7 @@ import com.semester5.ac1.pooii.ac1_190309.entities.Admin;
 
 public class AdminDTO {
     
+    private Long id;
     private String name;
     private String email;
     private String phoneNumber;
@@ -19,19 +20,28 @@ public class AdminDTO {
     public AdminDTO() {
     }
     
-    public AdminDTO(String name, String email, String phoneNumber) {
+    public AdminDTO(Long id, String name, String email, String phoneNumber) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
 
     public AdminDTO(Admin admin) {
+        this.id = admin.getId();
         this.name = admin.getName();
         this.email = admin.getEmail();
         this.phoneNumber = admin.getPhoneNumber();
     }
 
-    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

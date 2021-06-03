@@ -8,6 +8,8 @@
  */
 package com.semester5.ac1.pooii.ac1_190309.controllers;
 
+import java.net.URI;
+
 import javax.validation.Valid;
 
 import com.semester5.ac1.pooii.ac1_190309.dto.PlaceDTO;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/places")
@@ -64,8 +67,11 @@ public class PlaceController {
 
     @PostMapping
     public ResponseEntity<PlaceDTO> register(@Valid @RequestBody PlaceRegisterDTO registerDTO){
-
-        return ResponseEntity.ok(service.register(registerDTO));
+        
+        PlaceDTO dto = service.register(registerDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+        
+        return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping("{id}")

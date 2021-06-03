@@ -74,7 +74,6 @@ public class AttendService {
 
             entity.setName(dto.getName());
             entity.setEmail(dto.getEmail());
-            entity.setBalance(dto.getBalance());
 
             entity = repository.save(entity);
 

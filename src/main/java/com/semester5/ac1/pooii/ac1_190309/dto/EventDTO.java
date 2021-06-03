@@ -15,6 +15,7 @@ import com.semester5.ac1.pooii.ac1_190309.entities.Event;
 
 public class EventDTO {
 
+    private Long id;
     private String name;
     private String description;
     private String start_date;
@@ -33,9 +34,10 @@ public class EventDTO {
 
     }
 
-    public EventDTO(String name, String description, String start_date, String end_date, LocalTime start_time,
+    public EventDTO(Long id, String name, String description, String start_date, String end_date, LocalTime start_time,
             LocalTime end_time, String email, Long amountFreeTickets, Long amountPayedTickets, Double priceTicket,
             String place) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.start_date = start_date;
@@ -49,12 +51,11 @@ public class EventDTO {
         this.place = place;
     }
 
-
-
     public EventDTO(Event event) {
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+        this.id = event.getId();
         this.name = event.getName();
         this.description = event.getDescription();
         this.place = event.getPlace();
@@ -66,6 +67,15 @@ public class EventDTO {
         this.amountFreeTickets = event.getAmountFreeTickets();
         this.amountPayedTickets = event.getAmountPayedTickets();
         this.priceTicket = event.getPriceTicket();
+    }
+
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

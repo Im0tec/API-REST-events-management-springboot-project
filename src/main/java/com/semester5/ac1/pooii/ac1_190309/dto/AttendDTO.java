@@ -12,6 +12,7 @@ import com.semester5.ac1.pooii.ac1_190309.entities.Attend;
 
 public class AttendDTO {
     
+    private Long id;
     private String name;
     private String email;
     private Double balance;
@@ -19,16 +20,26 @@ public class AttendDTO {
     public AttendDTO() {
     }
 
-    public AttendDTO(String name, String email, Double balance) {
+    public AttendDTO(Long id, String name, String email, Double balance) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.balance = balance;
     }
 
     public AttendDTO(Attend attend) {
+        this.id = attend.getId();
         this.name = attend.getName();
         this.email = attend.getEmail();
         this.balance =  attend.getBalance();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

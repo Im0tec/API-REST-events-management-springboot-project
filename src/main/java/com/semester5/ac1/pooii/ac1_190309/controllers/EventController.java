@@ -9,6 +9,8 @@
 
 package com.semester5.ac1.pooii.ac1_190309.controllers;
 
+import java.net.URI;
+
 import javax.validation.Valid;
 
 import com.semester5.ac1.pooii.ac1_190309.dto.EventDTO;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/events")
@@ -67,8 +70,11 @@ public class EventController {
 
     @PostMapping
     public ResponseEntity<EventDTO> register(@Valid @RequestBody EventRegisterDTO registerDTO){
-
-        return ResponseEntity.ok(service.register(registerDTO));
+        
+        EventDTO dto = service.register(registerDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+        
+        return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping("{id}")

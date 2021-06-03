@@ -10,8 +10,6 @@ package com.semester5.ac1.pooii.ac1_190309.services;
 
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-
 import com.semester5.ac1.pooii.ac1_190309.dto.AdminDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.AdminRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.AdminUpdateDTO;
@@ -50,34 +48,27 @@ public class AdminService {
 
     public AdminDTO register(AdminRegisterDTO dto) {
 
-        try{
-            Admin entity = new Admin(dto);
-            entity = repository.save(entity);
-    
-            return new AdminDTO(entity);
-        }
-        catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Sorry, it couldn't be create");
-        }
+        checkEmail(dto.getEmail());
+        Admin entity = new Admin(dto);
+        entity = repository.save(entity);
+        
+        return new AdminDTO(entity);
+        
     }
 
     public AdminDTO update(Long id, AdminUpdateDTO dto){
 
-        try{
+        checkEmail(dto.getEmail());
+        Admin entity = repository.getOne(id);
 
-            Admin entity = repository.getOne(id);
+        entity.setName(dto.getName());
+        entity.setEmail(dto.getEmail());
+        entity.setPhoneNumber(dto.getPhoneNumber());
 
-            entity.setName(dto.getName());
-            entity.setEmail(dto.getEmail());
-            entity.setPhoneNumber(dto.getPhoneNumber());
+        entity = repository.save(entity);
 
-            entity = repository.save(entity);
-
-            return new AdminDTO(entity);
-        }
-        catch(EntityNotFoundException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin not found");
-        }
+        return new AdminDTO(entity);
+        
     }
 
     public void delete(Long id){
@@ -89,6 +80,14 @@ public class AdminService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin not found");
         }
         
+    }
+
+    public void checkEmail(String email){
+        Optional<Admin> admin = repository.findByEmail(email);
+
+        if(!admin.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The email inserted has already been registred");
+        }
     }
     
 }
