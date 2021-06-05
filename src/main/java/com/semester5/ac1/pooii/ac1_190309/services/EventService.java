@@ -73,9 +73,12 @@ public class EventService {
     public EventDTO register(EventRegisterDTO dto){
 
         try{
-            if(adminRepository.findById(dto.getAdminId()).isEmpty()){
+
+            //Check if the admin ID inserted on event register exists or belongs to an Admin
+            if(adminRepository.findById(dto.getAdmin().getId()).isEmpty()){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The id inserted in ''adminID'' does not exist or does not belong to an administrator");
             }
+            
             Event entity = new Event(dto);
             registerCheckControl(entity.getStart_date(), entity.getEnd_date(), entity.getStart_time(), entity.getEnd_time(), entity, repository.findAll());
             entity = repository.save(entity);

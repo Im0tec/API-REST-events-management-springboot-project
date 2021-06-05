@@ -11,6 +11,7 @@ package com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import com.semester5.ac1.pooii.ac1_190309.entities.Admin;
 import com.semester5.ac1.pooii.ac1_190309.entities.Event;
 
 public class EventDTO {
@@ -26,6 +27,7 @@ public class EventDTO {
     private Long amountFreeTickets;
     private Long amountPayedTickets;
     private Double priceTicket;
+    private Admin admin;
 
     private String place;
     //private List<Place> places = new ArrayList<>();
@@ -36,7 +38,7 @@ public class EventDTO {
 
     public EventDTO(Long id, String name, String description, String start_date, String end_date, LocalTime start_time,
             LocalTime end_time, String email, Long amountFreeTickets, Long amountPayedTickets, Double priceTicket,
-            String place) {
+            Admin admin, String place) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -48,6 +50,7 @@ public class EventDTO {
         this.amountFreeTickets = amountFreeTickets;
         this.amountPayedTickets = amountPayedTickets;
         this.priceTicket = priceTicket;
+        this.admin = admin;
         this.place = place;
     }
 
@@ -67,6 +70,7 @@ public class EventDTO {
         this.amountFreeTickets = event.getAmountFreeTickets();
         this.amountPayedTickets = event.getAmountPayedTickets();
         this.priceTicket = event.getPriceTicket();
+        this.admin = event.getAdmin();
     }
 
     
@@ -164,6 +168,14 @@ public class EventDTO {
 
     public void setPriceTicket(Double priceTicket) {
         this.priceTicket = priceTicket;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
 }

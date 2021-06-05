@@ -10,8 +10,6 @@ package com.semester5.ac1.pooii.ac1_190309.services;
 
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-
 import com.semester5.ac1.pooii.ac1_190309.dto.AttendsDTO.AttendDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.AttendsDTO.AttendRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.AttendsDTO.AttendUpdateDTO;
@@ -55,33 +53,24 @@ public class AttendService {
 
     public AttendDTO register(AttendRegisterDTO dto) {
 
-        try{
-            Attend entity = new Attend(dto);
-            entity = repository.save(entity);
+        checkEmail(dto.getEmail());
+        Attend entity = new Attend(dto);
+        entity = repository.save(entity);
     
-            return new AttendDTO(entity);
-        }
-        catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Sorry, it couldn't be create");
-        }
+        return new AttendDTO(entity);
     }
 
     public AttendDTO update(Long id, AttendUpdateDTO dto){
 
-        try{
+        checkEmail(dto.getEmail());
+        Attend entity = repository.getOne(id);
 
-            Attend entity = repository.getOne(id);
+        entity.setName(dto.getName());
+        entity.setEmail(dto.getEmail());
 
-            entity.setName(dto.getName());
-            entity.setEmail(dto.getEmail());
+        entity = repository.save(entity);
 
-            entity = repository.save(entity);
-
-            return new AttendDTO(entity);
-        }
-        catch(EntityNotFoundException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend not found");
-        }
+        return new AttendDTO(entity);
     }
 
     public void delete(Long id){
@@ -93,6 +82,15 @@ public class AttendService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend not found");
         }
         
+    }
+
+    public void checkEmail(String email){
+
+        Optional<Attend> attend = repository.findByEmail(email);
+        
+        if(!attend.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The email inserted has already been registred");
+        }
     }
     
 }

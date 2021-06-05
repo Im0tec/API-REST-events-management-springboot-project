@@ -13,6 +13,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.semester5.ac1.pooii.ac1_190309.entities.Admin;
+
 public class EventRegisterDTO {
 
     @NotBlank(message = "Type a name")
@@ -53,7 +55,7 @@ public class EventRegisterDTO {
     private Double priceTicket;
 
     @NotNull(message = "Type an adminId")
-    private Long adminId;
+    private Admin admin;
 
     public String getName() {
         return name;
@@ -143,12 +145,12 @@ public class EventRegisterDTO {
         this.priceTicket = priceTicket;
     }
 
-    public Long getAdminId() {
-        return adminId;
+    public Admin getAdmin() {
+        return admin;
     }
 
-    public void setAdminId(Long adminId) {
-        this.adminId = adminId;
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
    
 }

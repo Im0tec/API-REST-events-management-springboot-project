@@ -9,6 +9,7 @@
 package com.semester5.ac1.pooii.ac1_190309.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.semester5.ac1.pooii.ac1_190309.entities.Attend;
 
@@ -30,4 +31,6 @@ public interface AttendRepository extends JpaRepository<Attend, Long>{
     
     @Query("SELECT at FROM Attend at ")
     public Page<Attend> findAttendeesPageable(Pageable pageRequest);
+
+    Optional<Attend> findByEmail(String email);
 }

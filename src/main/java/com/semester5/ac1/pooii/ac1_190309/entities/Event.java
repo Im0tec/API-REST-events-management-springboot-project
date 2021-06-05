@@ -71,6 +71,7 @@ public class Event implements Serializable{
         this.amountFreeTickets = dto.getAmountFreeTickets();
         this.amountPayedTickets = dto.getAmountPayedTickets();
         this.priceTicket = dto.getPriceTicket();
+        this.admin = dto.getAdmin();
     }
 
     

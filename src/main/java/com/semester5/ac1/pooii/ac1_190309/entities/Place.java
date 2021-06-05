@@ -8,6 +8,7 @@
  */
 package com.semester5.ac1.pooii.ac1_190309.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,9 @@ import com.semester5.ac1.pooii.ac1_190309.dto.PlacesDTO.PlaceRegisterDTO;
 
 @Entity
 @Table(name = "TB_PLACE")
-public class Place {
+public class Place implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
