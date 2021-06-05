@@ -125,6 +125,10 @@ public class Event implements Serializable{
         this.places.add(places);
     }
 
+    public void removePlaces(Place places){
+        this.places.remove(places);
+    }
+
     public LocalDate getStart_date() {
         return start_date;
     }

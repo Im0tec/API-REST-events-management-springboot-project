@@ -25,10 +25,6 @@ public class EventRegisterDTO {
     @Size(min = 3, max = 100, message = "Description requires a minimum of 3 characters and a maximum of 100")
     private String description;
 
-    @NotBlank(message = "Type a place")
-    @Size(min = 3, max = 100, message = "Place requires a minimum of 3 characters and a maximum of 100")
-    private String place;
-
     @NotEmpty(message = "Start date can't be empty")
     private String start_date;
 
@@ -71,14 +67,6 @@ public class EventRegisterDTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
     }
 
     public String getStart_date() {

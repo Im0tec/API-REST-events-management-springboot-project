@@ -141,9 +141,26 @@ public class EventService {
         //Place
         Optional<Place> pl = placeRepository.findById(placeID);
         Place place = pl.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found"));
-
+        
         event.addPlaces(place);
         place.addEvents(event);
+        
+        repository.save(event);
+        placeRepository.save(place);
+    }
+    
+    public void eventPlaceDelete(Long eventID, Long placeID) {
+
+        //Event
+        Optional<Event> ev = repository.findById(eventID);
+        Event event = ev.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+        
+        //Place
+        Optional<Place> pl = placeRepository.findById(placeID);
+        Place place = pl.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found"));
+
+        event.removePlaces(place);
+        place.removeEvents(event);
 
         repository.save(event);
         placeRepository.save(place);
@@ -177,7 +194,7 @@ public class EventService {
         /*
         *
         * It's commented because theoretically you can register many events with the same start and end date
-        * but at the connection between place and event it must be taken into consideration, cause many place can start and end
+        * but at the connection between place and event it must be taken into consideration, cause many events can start and end
         * in the same time but not in the same place.
         *
         * This check is being done in the method below (eventPlaceConnectionChecks).
@@ -237,6 +254,7 @@ public class EventService {
             }
         }
     }
+
 
 }
 

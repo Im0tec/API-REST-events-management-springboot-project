@@ -93,7 +93,7 @@ public class EventController {
     }
 
     /*-----------------------------------------------------------------------------------------------------------------*/
-    /* Event -> Place connection below */
+    /* Event -> Place connection and delete below */
 
     @PostMapping("{eventID}/places/{placeID}")
     public ResponseEntity<EventDTO> eventPlaceConnection(@PathVariable Long eventID, @PathVariable Long placeID){
@@ -101,5 +101,13 @@ public class EventController {
         service.eventPlaceConnection(eventID, placeID);
 
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("{eventID}/places/{placeID}")
+    public ResponseEntity<Void> eventPlaceDelete(@PathVariable Long eventID, @PathVariable Long placeID){
+
+        service.eventPlaceDelete(eventID, placeID);
+
+        return ResponseEntity.noContent().build();
     }
 }
