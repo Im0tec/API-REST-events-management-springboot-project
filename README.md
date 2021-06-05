@@ -13,15 +13,11 @@ https://semester5-ac1-poolab-190309.herokuapp.com/
 ### POST  
   
   
-**1. Event**  
-  
-*A variável place ainda continua como o do projeto de AC1 (apenas recebendo uma string), pois como não era necessário fazer a ligação entre as entidades **Place** e **Event** deixei
-como estava para não retornar uma valor null no banco de dados. Porém, no código, as linhas que representam a relação de associação entre as tabelas estão comentadas.*  
+**1. Event**   
 ```json  
 {  
   "name": "Event name here",  
-  "description": "Event description here",  
-  "place": "Event place here",  
+  "description": "Event description here", 
   "start_date": "dd/MM/yyyy",  
   "end_date": "dd/MM/yyyy",  
   "start_time": "hh:MM",  
@@ -30,7 +26,9 @@ como estava para não retornar uma valor null no banco de dados. Porém, no cód
   "amountFreeTickets": "Free tickets here",  
   "amountPayedTickets": "Payed tickets here",  
   "priceTicket": "Price ticket here",  
-  "adminId": "Event admin id here"  
+  "admin": {
+    "id": "Event admin id here"
+  } 
 }  
 ```
 **2. Place**  
