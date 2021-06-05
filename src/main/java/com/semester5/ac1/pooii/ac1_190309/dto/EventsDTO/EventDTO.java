@@ -10,9 +10,12 @@ package com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.semester5.ac1.pooii.ac1_190309.entities.Admin;
 import com.semester5.ac1.pooii.ac1_190309.entities.Event;
+import com.semester5.ac1.pooii.ac1_190309.entities.Place;
 
 public class EventDTO {
 
@@ -29,8 +32,7 @@ public class EventDTO {
     private Double priceTicket;
     private Admin admin;
 
-    private String place;
-    //private List<Place> places = new ArrayList<>();
+    private List<Place> places = new ArrayList<>();
     
     public EventDTO(){
 
@@ -38,7 +40,7 @@ public class EventDTO {
 
     public EventDTO(Long id, String name, String description, String start_date, String end_date, LocalTime start_time,
             LocalTime end_time, String email, Long amountFreeTickets, Long amountPayedTickets, Double priceTicket,
-            Admin admin, String place) {
+            Admin admin, List<Place> places) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -51,7 +53,7 @@ public class EventDTO {
         this.amountPayedTickets = amountPayedTickets;
         this.priceTicket = priceTicket;
         this.admin = admin;
-        this.place = place;
+        this.places = places;
     }
 
     public EventDTO(Event event) {
@@ -61,7 +63,6 @@ public class EventDTO {
         this.id = event.getId();
         this.name = event.getName();
         this.description = event.getDescription();
-        this.place = event.getPlace();
         this.start_date = event.getStart_date().format(formatter);
         this.end_date = event.getEnd_date().format(formatter);
         this.start_time = event.getStart_time();
@@ -71,6 +72,7 @@ public class EventDTO {
         this.amountPayedTickets = event.getAmountPayedTickets();
         this.priceTicket = event.getPriceTicket();
         this.admin = event.getAdmin();
+        this.places = event.getPlaces();
     }
 
     
@@ -106,12 +108,12 @@ public class EventDTO {
         this.description = description;
     }
 
-    public String getPlace() {
-        return place;
+    public List<Place> getPlaces() {
+        return places;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setPlaces(List<Place> places) {
+        this.places = places;
     }
 
     public String getStart_date() {

@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.semester5.ac1.pooii.ac1_190309.dto.PlacesDTO.PlaceRegisterDTO;
 
 @Entity
@@ -34,6 +35,7 @@ public class Place implements Serializable{
     private String name;
     private String address;
     
+    @JsonIgnore
     @ManyToMany
     private List<Event> events = new ArrayList<>();
     

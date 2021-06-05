@@ -21,8 +21,10 @@ import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventUpdateDTO;
 import com.semester5.ac1.pooii.ac1_190309.entities.Event;
+import com.semester5.ac1.pooii.ac1_190309.entities.Place;
 import com.semester5.ac1.pooii.ac1_190309.repositories.AdminRepository;
 import com.semester5.ac1.pooii.ac1_190309.repositories.EventRepository;
+import com.semester5.ac1.pooii.ac1_190309.repositories.PlaceRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -42,18 +44,21 @@ public class EventService {
     @Autowired
     private AdminRepository adminRepository;
 
-    public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, String date){
+    @Autowired
+    private PlaceRepository placeRepository;
+
+    public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String description, String date){
 
         //If date is empty, it means date was not searched
         if(date.isEmpty()){
-            Page <Event> list = repository.findEventPageable(pageRequest, name, place, description);
+            Page <Event> list = repository.findEventPageable(pageRequest, name, description);
             return list.map( e -> new EventDTO(e) );
         }
         else{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             
             try{
-                Page<Event> list = repository.findEventPageable_Date(pageRequest, name, place, description, LocalDate.parse(date,formatter));
+                Page<Event> list = repository.findEventPageable_Date(pageRequest, name, description, LocalDate.parse(date,formatter));
                 return list.map( e -> new EventDTO(e) );
             }
             catch(DateTimeParseException e){
@@ -107,12 +112,12 @@ public class EventService {
         catch(EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
         }
-
+        
         
     }
-
+    
     public void delete(Long id){
-
+        
         try{
             repository.deleteById(id);
         }
@@ -121,6 +126,31 @@ public class EventService {
         }
         
     }
+
+    /*-----------------------------------------------------------------------------------------------------------------*/
+    /* Event -> Place connection below */
+
+    public void eventPlaceConnection(Long eventID, Long placeID) {
+
+        eventPlaceConnectionChecks(eventID, placeID);
+
+        //Event
+        Optional<Event> ev = repository.findById(eventID);
+        Event event = ev.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+        
+        //Place
+        Optional<Place> pl = placeRepository.findById(placeID);
+        Place place = pl.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found"));
+
+        event.addPlaces(place);
+        place.addEvents(event);
+
+        repository.save(event);
+        placeRepository.save(place);
+    }
+
+    /*-----------------------------------------------------------------------------------------------------------------*/
+    /* Necessary events checks below */
 
     public void registerCheckControl(LocalDate init_date, LocalDate end_date, LocalTime init_time, LocalTime end_time, Event event, List<Event> events){
 
@@ -144,18 +174,69 @@ public class EventService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Wait a minute, Doc. Are you telling me you built a time machine....out of DeLorean?''       Invalid! The end date must be superior than system date..."));
         }
 
-        //Check if an event has been already registred.
-        for(Event aux: events){
+        /*
+        *
+        * It's commented because theoretically you can register many events with the same start and end date
+        * but at the connection between place and event it must be taken into consideration, cause many place can start and end
+        * in the same time but not in the same place.
+        *
+        * This check is being done in the method below (eventPlaceConnectionChecks).
+        *
+        * Check if an event has been already registred.
+        *
+        *   for(Event aux: events){
+        *
+        *    if(aux != event){
+        *
+        *           if(!(init_date.compareTo(aux.getStart_date()) < 0 && end_date.compareTo(aux.getEnd_date()) < 0) && !(end_date.compareTo(aux.getEnd_date()) > 0 && init_date.compareTo(aux.getEnd_date()) > 0)){
+        *               throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Same matter can not occupy same space...''       Invalid! There is already an event registred on this date..."));
+        *           }
+        *       
+        *       }
+            }
+        */
 
-            if(aux != event){
+    }
+    
+    public void eventPlaceConnectionChecks(Long eventID, Long placeID) {
+    
+        //Get all the events of the place inserted
+        List<Event> eventsOfPlace = placeRepository.findById(placeID).get().getEvents();
 
-                if(!(init_date.compareTo(aux.getStart_date()) < 0 && end_date.compareTo(aux.getEnd_date()) < 0) && !(end_date.compareTo(aux.getEnd_date()) > 0 && init_date.compareTo(aux.getEnd_date()) > 0)){
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Same matter can not occupy same space...''       Invalid! There is already an event registred on this date..."));
+        //Get all the places of the event inserted
+        List<Place> placesOfEvents = repository.findById(eventID).get().getPlaces();
+
+        //Check if exist an event with the id inserted.
+        if(repository.findById(eventID).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''That's what i'm trying to tell you, kid. It ain't there. It's been totally blown away''       Invalid! The event ID inserted doesn't even exists."));
+        }
+        
+        //Check if exist a place with the id inserted.
+        if(placeRepository.findById(placeID).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''That's what i'm trying to tell you, kid. It ain't there. It's been totally blown away''       Invalid! The place ID inserted doesn't even exists."));
+        }
+
+        //Check if the event has already located in the place inserted (avoiding duplicate data).
+        for(Event event: eventsOfPlace){
+
+            for(Place place: placesOfEvents){
+
+                if(event.getId() == place.getId()){
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Same matter can not occupy same space...''       Invalid! This event has already located in this place"));
                 }
-                
             }
         }
 
+
+        Optional<Event> event = repository.findById(eventID);
+
+        //Check if there is an event with the same start and end date in the place inserted.
+        for(Event aux: eventsOfPlace){
+            if(!(event.get().getStart_date().compareTo(aux.getStart_date()) < 0 && event.get().getEnd_date().compareTo(aux.getEnd_date()) < 0) && !(event.get().getEnd_date().compareTo(aux.getEnd_date()) > 0 && event.get().getStart_date().compareTo(aux.getEnd_date()) > 0)){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Same matter can not occupy same space...''       Invalid! There is already an event registred on this date in this place..."));
+            }
+        }
     }
 
 }
+

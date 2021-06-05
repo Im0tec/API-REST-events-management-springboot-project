@@ -49,13 +49,12 @@ public class EventController {
         @RequestParam(value = "direction", defaultValue = "ASC") String direction,
         @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
         @RequestParam(value = "name", defaultValue = "") String name,
-        @RequestParam(value = "place", defaultValue = "") String place,
         @RequestParam(value = "description", defaultValue = "") String description,
         @RequestParam(value = "startDate", defaultValue = "") String date
     ){
 
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-        Page <EventDTO> list = service.getEvents(pageRequest, name, place, description, date);
+        Page <EventDTO> list = service.getEvents(pageRequest, name, description, date);
 
         return ResponseEntity.ok(list);
     }
@@ -91,5 +90,16 @@ public class EventController {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    /*-----------------------------------------------------------------------------------------------------------------*/
+    /* Event -> Place connection below */
+
+    @PostMapping("{eventID}/places/{placeID}")
+    public ResponseEntity<EventDTO> eventPlaceConnection(@PathVariable Long eventID, @PathVariable Long placeID){
+        
+        service.eventPlaceConnection(eventID, placeID);
+
+        return ResponseEntity.ok().build();
     }
 }

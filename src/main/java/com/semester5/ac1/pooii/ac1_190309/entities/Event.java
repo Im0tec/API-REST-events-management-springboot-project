@@ -12,11 +12,14 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -44,13 +47,11 @@ public class Event implements Serializable{
     private Long amountPayedTickets;
     private Double priceTicket;
 
-    private String place;
-
     @ManyToOne
     private Admin admin;
     
-    /*@ManyToMany(mappedBy = "events")
-    private List<Place> places = new ArrayList<>();*/
+    @ManyToMany(mappedBy = "events")
+    private List<Place> places = new ArrayList<>();
     
     public Event() {
        
@@ -67,7 +68,6 @@ public class Event implements Serializable{
         this.start_time = LocalTime.parse(dto.getStart_time());
         this.end_time = LocalTime.parse(dto.getEnd_time());
         this.email = dto.getEmail();
-        this.place = dto.getPlace();
         this.amountFreeTickets = dto.getAmountFreeTickets();
         this.amountPayedTickets = dto.getAmountPayedTickets();
         this.priceTicket = dto.getPriceTicket();
@@ -117,12 +117,12 @@ public class Event implements Serializable{
         this.description = description;
     }
 
-    public String getPlace() {
-        return place;
+    public List<Place> getPlaces() {
+        return places;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void addPlaces(Place places) {
+        this.places.add(places);
     }
 
     public LocalDate getStart_date() {
