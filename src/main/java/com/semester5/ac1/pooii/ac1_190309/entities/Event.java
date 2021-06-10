@@ -25,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.entities.type.TicketType;
 
 @Entity
 @Table(name="TB_EVENT")
@@ -213,6 +214,38 @@ public class Event implements Serializable{
         this.tickets.add(tickets);
     }
 
+    public Long amountFreeTicketsRemaining(){
+
+        if(getAmountFreeTickets() == 0) return getAmountFreeTickets();
+        
+        else{
+
+            for(Ticket aux: getTickets()){
+                if(aux.getType() == TicketType.FREE){
+                    
+                    amountFreeTickets -= 1;
+                }
+            }
+            return amountFreeTickets;
+        }
+    }
+    
+    public Long amountPayedTicketsRemaining(){
+
+        if(getAmountPayedTickets() == 0) return getAmountPayedTickets();
+        
+        else{
+
+            for(Ticket aux: getTickets()){
+                if(aux.getType() == TicketType.PAYED){
+                    
+                    amountPayedTickets -= 1;
+                }
+            }
+            return amountPayedTickets;
+        }
+    }
+    
     @Override
     public int hashCode() {
         final int prime = 31;

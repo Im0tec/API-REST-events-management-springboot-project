@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.semester5.ac1.pooii.ac1_190309.dto.TicketsDTO.TicketRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.entities.type.TicketType;
 
@@ -28,10 +29,12 @@ public class Ticket implements Serializable{
     private Double price;
     private TicketType type;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "EVENTID_TICKET")
     private Event eventTicket;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "ATTENDID_TICKET")
     private Attend attendTicket;

@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.TicketsDTO.TicketDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.TicketsDTO.TicketRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.services.EventService;
 
@@ -113,7 +114,15 @@ public class EventController {
     }
 
     /*-----------------------------------------------------------------------------------------------------------------*/
-    /* Event -> Ticket GET, POST and DELETE below */
+    /* Ticket GET, POST and DELETE below */
+
+    @GetMapping("{eventID}/tickets")
+    public ResponseEntity<TicketDTO> getTicketsFromEvent(@PathVariable Long eventID){
+        
+        TicketDTO dto = service.getTicketsFromEvent(eventID);
+
+        return ResponseEntity.ok(dto);
+    }
 
     @PostMapping("{eventID}/tickets")
     public ResponseEntity<Void> buyingTicket(@PathVariable Long eventID, @Valid @RequestBody TicketRegisterDTO ticketDTO){

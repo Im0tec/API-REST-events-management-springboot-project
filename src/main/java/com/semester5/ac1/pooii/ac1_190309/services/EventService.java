@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,8 @@ import javax.validation.Valid;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.TicketsDTO.TicketDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.TicketsDTO.TicketGetDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.TicketsDTO.TicketRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.entities.Attend;
 import com.semester5.ac1.pooii.ac1_190309.entities.Event;
@@ -180,8 +183,28 @@ public class EventService {
     }
     
     /*-----------------------------------------------------------------------------------------------------------------*/
-    /* Event -> Ticket GET, POST and DELETE below */
+    /* Ticket GET, POST and DELETE below */
 
+    public TicketDTO getTicketsFromEvent(Long eventID){
+
+        //Event
+        Optional<Event> ev = repository.findById(eventID);
+        Event event = ev.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+    
+        List<TicketGetDTO> tickets = new ArrayList<>();
+
+        for(Ticket aux: event.getTickets()){
+            
+            TicketGetDTO getDTO = new TicketGetDTO(aux);
+            tickets.add(getDTO); 
+        }
+
+        TicketDTO ticketDTO = new TicketDTO(event.getAmountFreeTickets(), event.getAmountPayedTickets(), event.amountFreeTicketsRemaining(), event.amountPayedTicketsRemaining(), tickets);
+        
+        return ticketDTO;
+
+    }
+    
     public void buyingTicket(Long eventID, @Valid TicketRegisterDTO ticketDTO) {
         
         //Event
@@ -282,7 +305,6 @@ public class EventService {
                 }
             }
         }
-
 
         Optional<Event> event = repository.findById(eventID);
 
