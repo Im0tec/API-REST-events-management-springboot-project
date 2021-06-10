@@ -14,15 +14,15 @@ import javax.validation.constraints.Size;
 
 public class EventUpdateDTO {
 
-    @NotBlank(message = "Type a name")
+    @NotBlank(message = "Insert a name")
     @Size(min = 3, max = 100, message = "Name requires a minimum of 3 characters and a maximum of 100")
     private String name;
 
-    @NotBlank(message = "Type a description")
+    @NotBlank(message = "Insert a description")
     @Size(min = 3, max = 100, message = "Description requires a minimum of 3 characters and a maximum of 100")
     private String description;
 
-    @NotBlank(message = "Type an email")
+    @NotBlank(message = "Insert an email")
     @Size(min = 3, max = 100, message = "Email requires a minimum of 3 characters and a maximum of 100")
     @Email
     private String email;

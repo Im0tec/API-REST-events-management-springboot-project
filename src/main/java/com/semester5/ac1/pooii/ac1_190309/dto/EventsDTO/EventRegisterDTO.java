@@ -17,11 +17,11 @@ import com.semester5.ac1.pooii.ac1_190309.entities.Admin;
 
 public class EventRegisterDTO {
 
-    @NotBlank(message = "Type a name")
+    @NotBlank(message = "Insert a name")
     @Size(min = 3, max = 100, message = "Name requires a minimum of 3 characters and a maximum of 100")
     private String name;
 
-    @NotBlank(message = "Type a description")
+    @NotBlank(message = "Insert a description")
     @Size(min = 3, max = 100, message = "Description requires a minimum of 3 characters and a maximum of 100")
     private String description;
 
@@ -37,7 +37,7 @@ public class EventRegisterDTO {
     @NotEmpty(message = "End date can't be empty")
     private String end_time;
 
-    @NotBlank(message = "Type an email")
+    @NotBlank(message = "Insert an email")
     @Size(min = 3, max = 100, message = "Email requires a minimum of 3 characters and a maximum of 100")
     private String email;
 
@@ -50,7 +50,7 @@ public class EventRegisterDTO {
     @NotNull(message = "Insert ticket price")
     private Double priceTicket;
 
-    @NotNull(message = "Type an adminId")
+    @NotNull(message = "Insert an adminId")
     private Admin admin;
 
     public String getName() {

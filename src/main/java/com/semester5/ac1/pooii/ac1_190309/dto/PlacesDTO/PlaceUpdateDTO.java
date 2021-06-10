@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 
 public class PlaceUpdateDTO {
     
-    @NotBlank(message = "Type a name")
+    @NotBlank(message = "Insert a name")
     @Size(min = 3, max = 100, message = "Name requires a minimum of 3 characters and a maximum of 100")
     private String name;
 

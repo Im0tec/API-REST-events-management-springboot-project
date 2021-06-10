@@ -21,6 +21,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventRegisterDTO;
@@ -52,6 +53,9 @@ public class Event implements Serializable{
     
     @ManyToMany(mappedBy = "events")
     private List<Place> places = new ArrayList<>();
+
+    @OneToMany(mappedBy = "eventTicket")
+    private List<Ticket> tickets = new ArrayList<>();
     
     public Event() {
        
@@ -199,6 +203,14 @@ public class Event implements Serializable{
 
     public void setAdmin(Admin admin) {
         this.admin = admin;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void addTickets(Ticket tickets) {
+        this.tickets.add(tickets);
     }
 
     @Override

@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.TicketsDTO.TicketRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.services.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,10 +94,10 @@ public class EventController {
     }
 
     /*-----------------------------------------------------------------------------------------------------------------*/
-    /* Event -> Place connection and delete below */
+    /* Event -> Place POST and DELETE below */
 
     @PostMapping("{eventID}/places/{placeID}")
-    public ResponseEntity<EventDTO> eventPlaceConnection(@PathVariable Long eventID, @PathVariable Long placeID){
+    public ResponseEntity<Void> eventPlaceConnection(@PathVariable Long eventID, @PathVariable Long placeID){
         
         service.eventPlaceConnection(eventID, placeID);
 
@@ -109,5 +110,16 @@ public class EventController {
         service.eventPlaceDelete(eventID, placeID);
 
         return ResponseEntity.noContent().build();
+    }
+
+    /*-----------------------------------------------------------------------------------------------------------------*/
+    /* Event -> Ticket GET, POST and DELETE below */
+
+    @PostMapping("{eventID}/tickets")
+    public ResponseEntity<Void> buyingTicket(@PathVariable Long eventID, @Valid @RequestBody TicketRegisterDTO ticketDTO){
+
+        service.buyingTicket(eventID, ticketDTO);
+
+        return ResponseEntity.ok().build();
     }
 }

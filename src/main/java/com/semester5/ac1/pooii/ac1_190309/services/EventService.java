@@ -16,15 +16,22 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventUpdateDTO;
+import com.semester5.ac1.pooii.ac1_190309.dto.TicketsDTO.TicketRegisterDTO;
+import com.semester5.ac1.pooii.ac1_190309.entities.Attend;
 import com.semester5.ac1.pooii.ac1_190309.entities.Event;
 import com.semester5.ac1.pooii.ac1_190309.entities.Place;
+import com.semester5.ac1.pooii.ac1_190309.entities.Ticket;
+import com.semester5.ac1.pooii.ac1_190309.entities.type.TicketType;
 import com.semester5.ac1.pooii.ac1_190309.repositories.AdminRepository;
+import com.semester5.ac1.pooii.ac1_190309.repositories.AttendRepository;
 import com.semester5.ac1.pooii.ac1_190309.repositories.EventRepository;
 import com.semester5.ac1.pooii.ac1_190309.repositories.PlaceRepository;
+import com.semester5.ac1.pooii.ac1_190309.repositories.TicketRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -46,6 +53,12 @@ public class EventService {
 
     @Autowired
     private PlaceRepository placeRepository;
+
+    @Autowired
+    private AttendRepository attendRepository;
+
+    @Autowired
+    private TicketRepository ticketRepository;
 
     public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String description, String date){
 
@@ -128,7 +141,7 @@ public class EventService {
     }
 
     /*-----------------------------------------------------------------------------------------------------------------*/
-    /* Event -> Place connection below */
+    /* Event -> Place POST and DELETE below */
 
     public void eventPlaceConnection(Long eventID, Long placeID) {
 
@@ -158,18 +171,40 @@ public class EventService {
         //Place
         Optional<Place> pl = placeRepository.findById(placeID);
         Place place = pl.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found"));
-
+        
         event.removePlaces(place);
         place.removeEvents(event);
-
+        
         repository.save(event);
         placeRepository.save(place);
     }
+    
+    /*-----------------------------------------------------------------------------------------------------------------*/
+    /* Event -> Ticket GET, POST and DELETE below */
+
+    public void buyingTicket(Long eventID, @Valid TicketRegisterDTO ticketDTO) {
+        
+        //Event
+        Optional<Event> ev = repository.findById(eventID);
+        Event event = ev.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+        
+        //Attend
+        Optional<Attend> at = attendRepository.findById(ticketDTO.getAttend().getId());
+        Attend attend = at.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The attend ID inserted does not exists or does not belong to an attend"));
+
+        buyingTicketsControl(event, attend, ticketDTO);
+
+        Ticket ticket = new Ticket(ticketDTO, event.getPriceTicket(), event);
+                
+        ticketRepository.save(ticket);
+    }
 
     /*-----------------------------------------------------------------------------------------------------------------*/
-    /* Necessary events checks below */
+    /* Necessary validations below */
 
     public void registerCheckControl(LocalDate init_date, LocalDate end_date, LocalTime init_time, LocalTime end_time, Event event, List<Event> events){
+
+        /* -------------- EVENT REGISTER VALIDATIONS BELOW -------------- */
 
         //Check if event's end date is superior than start date.
         if(end_date.compareTo(init_date) < 0){
@@ -197,7 +232,9 @@ public class EventService {
         * but at the connection between place and event it must be taken into consideration, cause many events can start and end
         * in the same time but not in the same place.
         *
-        * This check is being done in the method below (eventPlaceConnectionChecks).
+        * This check is being done (with some changes) in the method below (eventPlaceConnectionChecks).
+        *
+        * ----------------------------------------------------------------------------------------------
         *
         * Check if an event has been already registred.
         *
@@ -216,7 +253,9 @@ public class EventService {
     }
     
     public void eventPlaceConnectionChecks(Long eventID, Long placeID) {
-    
+
+        /* -------------- CONNECTION(EVENT AND PLACE) VALIDATIONS BELOW -------------- */
+
         //Get all the events of the place inserted
         List<Event> eventsOfPlace = placeRepository.findById(placeID).get().getEvents();
 
@@ -255,6 +294,56 @@ public class EventService {
         }
     }
 
+    public void buyingTicketsControl(Event event, Attend attend, TicketRegisterDTO ticketDTO){
+        
+        /* -------------- TICKETS VALIDATIONS BELOW -------------- */ 
+
+        //Some checks for FREE tickets
+        if(ticketDTO.getType() == TicketType.FREE){
+            
+            if(event.getAmountFreeTickets() > 0){
+                
+                //Check if there is any FREE ticket available to be sold.
+                int cont = 0;
+                for(Ticket aux: event.getTickets()){
+
+                    if(aux.getType() == TicketType.FREE) cont++;
+                }
+                if(cont == event.getAmountFreeTickets()){
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! Free tickets has been sold out..."));
+                }
+            }
+            else{
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! This event does not have free tickets."));
+            }
+        }
+        
+        //Some checks for PAID tickets
+        if(ticketDTO.getType() == TicketType.PAYED){
+            
+            if(event.getAmountPayedTickets() > 0){
+                
+                //Check if there is any PAID ticket available to be sold.
+                int cont = 0;
+                for(Ticket aux: event.getTickets()){
+
+                    if(aux.getType() == TicketType.PAYED) cont++;
+                }
+
+                if(cont == event.getAmountPayedTickets()){
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! Paid tickets has been sold out..."));
+                }
+
+                //Check if attend's balance is negative, cause if it does, the attend will not be allowed to buy a ticket.
+                if(attend.canBuyTicket(event.getPriceTicket()) == false){
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! This attend does not have enough balance to complete this purchase."));
+                }
+            }
+            else{
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! This event does not have paid tickets."));
+            }
+        }
+    }
 
 }
 

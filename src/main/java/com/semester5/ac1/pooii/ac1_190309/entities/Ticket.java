@@ -2,13 +2,18 @@ package com.semester5.ac1.pooii.ac1_190309.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.semester5.ac1.pooii.ac1_190309.dto.TicketsDTO.TicketRegisterDTO;
 import com.semester5.ac1.pooii.ac1_190309.entities.type.TicketType;
 
 @Entity
@@ -23,6 +28,14 @@ public class Ticket implements Serializable{
     private Double price;
     private TicketType type;
 
+    @ManyToOne
+    @JoinColumn(name = "EVENTID_TICKET")
+    private Event eventTicket;
+
+    @ManyToOne
+    @JoinColumn(name = "ATTENDID_TICKET")
+    private Attend attendTicket;
+
     public Ticket() {
     }
 
@@ -30,6 +43,14 @@ public class Ticket implements Serializable{
         this.id = id;
         this.date = date;
         this.price = price;
+    }
+
+    public Ticket(TicketRegisterDTO dto, Double price, Event event){
+        this.date = LocalDate.now().atStartOfDay().toInstant(ZoneOffset.UTC);
+        this.price = price;
+        this.type = dto.getType();
+        this.attendTicket = dto.getAttend();
+        this.eventTicket = event;
     }
 
     public Long getId() {
@@ -57,6 +78,22 @@ public class Ticket implements Serializable{
 
     public void setType(TicketType type) {
         this.type = type;
+    }
+
+    public Event getEventTicket() {
+        return eventTicket;
+    }
+
+    public void setEventTicket(Event eventTicket) {
+        this.eventTicket = eventTicket;
+    }
+
+    public Attend getAttendTicket() {
+        return attendTicket;
+    }
+
+    public void setAttendTicket(Attend attendTicket) {
+        this.attendTicket = attendTicket;
     }
 
     @Override

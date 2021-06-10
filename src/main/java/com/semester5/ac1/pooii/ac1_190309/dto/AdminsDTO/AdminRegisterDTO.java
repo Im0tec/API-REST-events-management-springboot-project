@@ -13,15 +13,15 @@ import javax.validation.constraints.Size;
 
 public class AdminRegisterDTO {
     
-    @NotBlank(message = "Type a name")
+    @NotBlank(message = "Insert a name")
     @Size(min = 3, max = 100, message = "Name requires a minimum of 3 characters and a maximum of 100")
     private String name;
 
-    @NotBlank(message = "Type an email")
+    @NotBlank(message = "Insert an email")
     @Size(min = 3, max = 100, message = "Email requires a minimum of 3 characters and a maximum of 100")
     private String email;
 
-    @NotBlank(message = "Type a phone number")
+    @NotBlank(message = "Insert a phone number")
     @Size(min = 3, max = 100, message = "phone number requires a minimum of 3 characters and a maximum of 100")
     private String phoneNumber;
 
