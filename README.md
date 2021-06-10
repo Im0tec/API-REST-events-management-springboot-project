@@ -85,7 +85,6 @@ https://semester5-ac1-poolab-190309.herokuapp.com/
 ```json
 {
     "name": "New attend name here",
-    "email": "New attend email here",
-    "balance": "New attend balance here"
+    "email": "New attend email here"
 }
 ```
