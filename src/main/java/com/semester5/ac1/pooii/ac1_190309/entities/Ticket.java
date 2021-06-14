@@ -2,8 +2,6 @@ package com.semester5.ac1.pooii.ac1_190309.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +18,8 @@ import com.semester5.ac1.pooii.ac1_190309.entities.type.TicketType;
 @Entity
 @Table(name = "TB_TICKET")
 public class Ticket implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +49,7 @@ public class Ticket implements Serializable{
     }
 
     public Ticket(TicketRegisterDTO dto, Double price, Event event){
-        this.date = LocalDate.now().atStartOfDay().toInstant(ZoneOffset.UTC);
+        this.date = Instant.now();
         this.price = price;
         this.type = dto.getType();
         this.attendTicket = dto.getAttend();

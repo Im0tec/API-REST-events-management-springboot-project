@@ -7,6 +7,8 @@ public class TicketDTO {
     
     private Long amountFreeTickets;
     private Long amountPayedTickets;
+    private Long amountFreeTicketsRemaining;
+    private Long amountPayedTicketsRemaining;
     private Long amountFreeTicketsSold;
     private Long amountPayedTicketsSold;
 
@@ -19,9 +21,11 @@ public class TicketDTO {
             Long amountPayedTicketsSold, List<TicketGetDTO> tickets) {
         this.amountFreeTickets = amountFreeTickets;
         this.amountPayedTickets = amountPayedTickets;
-        this.amountFreeTicketsSold = amountFreeTicketsSold;
-        this.amountPayedTicketsSold = amountPayedTicketsSold;
+        this.amountFreeTicketsRemaining = amountFreeTicketsSold;
+        this.amountPayedTicketsRemaining = amountPayedTicketsSold;
         this.tickets = tickets;
+        this.amountFreeTicketsSold = getAmountFreeTickets() - getAmountFreeTicketsRemaining();
+        this.amountPayedTicketsSold = getAmountPayedTickets() - getAmountPayedTicketsRemaining();
     }
 
     public Long getAmountFreeTickets() {
@@ -38,6 +42,22 @@ public class TicketDTO {
 
     public void setAmountPayedTickets(Long amountPayedTickets) {
         this.amountPayedTickets = amountPayedTickets;
+    }
+
+    public Long getAmountFreeTicketsRemaining() {
+        return amountFreeTicketsRemaining;
+    }
+
+    public void setAmountFreeTicketsRemaining(Long amountFreeTicketsRemaining) {
+        this.amountFreeTicketsRemaining = amountFreeTicketsRemaining;
+    }
+
+    public Long getAmountPayedTicketsRemaining() {
+        return amountPayedTicketsRemaining;
+    }
+
+    public void setAmountPayedTicketsRemaining(Long amountPayedTicketsRemaining) {
+        this.amountPayedTicketsRemaining = amountPayedTicketsRemaining;
     }
 
     public Long getAmountFreeTicketsSold() {
@@ -63,5 +83,7 @@ public class TicketDTO {
     public void setTickets(List<TicketGetDTO> tickets) {
         this.tickets = tickets;
     }
+
+    
 
 }

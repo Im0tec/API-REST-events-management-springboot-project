@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventDTO;
 import com.semester5.ac1.pooii.ac1_190309.dto.EventsDTO.EventRegisterDTO;
@@ -199,13 +198,17 @@ public class EventService {
             tickets.add(getDTO); 
         }
 
-        TicketDTO ticketDTO = new TicketDTO(event.getAmountFreeTickets(), event.getAmountPayedTickets(), event.amountFreeTicketsRemaining(), event.amountPayedTicketsRemaining(), tickets);
+        TicketDTO ticketDTO = new TicketDTO(event.getAmountFreeTickets(), 
+                                            event.getAmountPayedTickets(), 
+                                            event.amountFreeTicketsRemaining(), 
+                                            event.amountPayedTicketsRemaining(), 
+                                            tickets);
         
         return ticketDTO;
 
     }
-    
-    public void buyingTicket(Long eventID, @Valid TicketRegisterDTO ticketDTO) {
+
+    public void buyingTicket(Long eventID, TicketRegisterDTO ticketDTO) {
         
         //Event
         Optional<Event> ev = repository.findById(eventID);
@@ -220,6 +223,23 @@ public class EventService {
         Ticket ticket = new Ticket(ticketDTO, event.getPriceTicket(), event);
                 
         ticketRepository.save(ticket);
+    }
+
+    public void refoundTicket(Long eventID, Long ticketID){
+        
+        //Event
+        Optional<Event> ev = repository.findById(eventID);
+        Event event = ev.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+        
+        //Ticket
+        Optional<Ticket> tk = ticketRepository.findById(ticketID);
+        Ticket ticket = tk.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found"));
+
+        refoundTicketControl(event, ticket.getAttendTicket(), ticket);
+
+        ticket.getAttendTicket().refoundPayedTicket(ticket.getPrice());
+        attendRepository.save(ticket.getAttendTicket());
+        ticketRepository.delete(ticket);
     }
 
     /*-----------------------------------------------------------------------------------------------------------------*/
@@ -365,6 +385,29 @@ public class EventService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! This event does not have paid tickets."));
             }
         }
+    }
+
+    public void refoundTicketControl(Event event, Attend attend, Ticket ticket){
+
+        if(attend.getTickets().isEmpty()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! This attend has no ticket to refund..."));
+
+        //Check if the user isn't trying to refund a ticket for an event that has no paid ticket.
+        if(ticket.getType() == TicketType.PAYED){
+
+            if(event.getAmountPayedTickets() == 0){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! You can´t refund this ticket because the event does not have paid tickets to sell."));
+            }
+        }
+        
+        //Check if the user isn't trying to refund a ticket for an event that has no free ticket.
+        if(ticket.getType() == TicketType.FREE){
+
+            if(event.getAmountFreeTickets() == 0){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! You can´t refund this ticket because the event does not have free tickets."));
+            }
+        }
+
+        
     }
 
 }

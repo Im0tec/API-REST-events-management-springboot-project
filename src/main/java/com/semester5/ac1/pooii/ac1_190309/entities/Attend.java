@@ -72,5 +72,9 @@ public class Attend extends BaseUser {
             return true;
         } 
     }
+
+    public void refoundPayedTicket(Double ticketPrice) {
+        this.balance = this.balance + ticketPrice;
+    }
     
 }

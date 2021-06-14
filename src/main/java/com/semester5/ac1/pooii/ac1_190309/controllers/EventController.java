@@ -131,4 +131,12 @@ public class EventController {
 
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("{eventID}/tickets/{ticketID}")
+    public ResponseEntity<Void> refoundTicket(@PathVariable Long eventID, @PathVariable Long ticketID){
+
+        service.refoundTicket(eventID, ticketID);
+
+        return ResponseEntity.noContent().build();
+    }
 }
