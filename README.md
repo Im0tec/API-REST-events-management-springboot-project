@@ -53,7 +53,16 @@ https://semester5-ac1-poolab-190309.herokuapp.com/
     "email": "Attend email here",  
     "balance": "Attend balance here"  
 }  
-```
+```  
+**5. Tickets**  
+```json
+{
+    "type": "Ticket type here (FREE or PAYED)",  
+    "attend": {  
+        "id": "Attend id here"  
+    }  
+}  
+```  
 -------
 ### PUT  
   
