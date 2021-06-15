@@ -5,6 +5,7 @@ import com.semester5.ac1.pooii.ac1_190309.entities.type.TicketType;
 
 public class TicketGetDTO {
     
+    private Long id;
     private TicketType type;
     private String attendName;
     
@@ -17,8 +18,17 @@ public class TicketGetDTO {
     }
     
     public TicketGetDTO(Ticket ticket) {
+        this.id = ticket.getId();
         this.type = ticket.getType();
         this.attendName = ticket.getAttendTicket().getName();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public TicketType getType() {

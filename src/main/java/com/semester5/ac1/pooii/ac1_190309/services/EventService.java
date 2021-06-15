@@ -227,17 +227,12 @@ public class EventService {
 
     public void refoundTicket(Long eventID, Long ticketID){
         
-        //Event
-        Optional<Event> ev = repository.findById(eventID);
-        Event event = ev.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
-        
         //Ticket
         Optional<Ticket> tk = ticketRepository.findById(ticketID);
         Ticket ticket = tk.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found"));
 
-        refoundTicketControl(event, ticket.getAttendTicket(), ticket);
-
         ticket.getAttendTicket().refoundPayedTicket(ticket.getPrice());
+        
         attendRepository.save(ticket.getAttendTicket());
         ticketRepository.delete(ticket);
     }
@@ -385,29 +380,6 @@ public class EventService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! This event does not have paid tickets."));
             }
         }
-    }
-
-    public void refoundTicketControl(Event event, Attend attend, Ticket ticket){
-
-        if(attend.getTickets().isEmpty()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! This attend has no ticket to refund..."));
-
-        //Check if the user isn't trying to refund a ticket for an event that has no paid ticket.
-        if(ticket.getType() == TicketType.PAYED){
-
-            if(event.getAmountPayedTickets() == 0){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! You can´t refund this ticket because the event does not have paid tickets to sell."));
-            }
-        }
-        
-        //Check if the user isn't trying to refund a ticket for an event that has no free ticket.
-        if(ticket.getType() == TicketType.FREE){
-
-            if(event.getAmountFreeTickets() == 0){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid! You can´t refund this ticket because the event does not have free tickets."));
-            }
-        }
-
-        
     }
 
 }
