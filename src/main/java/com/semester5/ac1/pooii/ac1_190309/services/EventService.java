@@ -264,30 +264,6 @@ public class EventService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Wait a minute, Doc. Are you telling me you built a time machine....out of DeLorean?''       Invalid! The end date must be superior than system date..."));
         }
 
-        /*
-        *
-        * It's commented because theoretically you can register many events with the same start and end date
-        * but at the connection between place and event it must be taken into consideration, cause many events can start and end
-        * in the same time but not in the same place.
-        *
-        * This check is being done (with some changes) in the method below (eventPlaceConnectionChecks).
-        *
-        * ----------------------------------------------------------------------------------------------
-        *
-        * Check if an event has been already registred.
-        *
-        *   for(Event aux: events){
-        *
-        *    if(aux != event){
-        *
-        *           if(!(init_date.compareTo(aux.getStart_date()) < 0 && end_date.compareTo(aux.getEnd_date()) < 0) && !(end_date.compareTo(aux.getEnd_date()) > 0 && init_date.compareTo(aux.getEnd_date()) > 0)){
-        *               throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("  ''Same matter can not occupy same space...''       Invalid! There is already an event registred on this date..."));
-        *           }
-        *       
-        *       }
-            }
-        */
-
     }
     
     public void eventPlaceConnectionChecks(Long eventID, Long placeID) {
