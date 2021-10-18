@@ -1,12 +1,25 @@
-# 5 Semestre - AC2 Programação Orientada a Objetos
-**DUPLA:**  
-Eduardo Campos Gonçalves - 190309  
-Johanna Bernecker - 190737
+# 5th Semester - AC2 Object-Oriented Programming 👨🏽‍💻
 
-### Link da aplicação no Heroku  
+Api-Restfull developed in my OOP classes.
+
+### Application link on Heroku:  
   
 https://semester5-ac1-poolab-190309.herokuapp.com/
-## Estilos dos JSON's de requisição
+
+## Endpoints
+1. Access registered events ("/events"):  
+https://semester5-ac1-poolab-190309.herokuapp.com/events
+
+2. Access registered places ("/places"):  
+https://semester5-ac1-poolab-190309.herokuapp.com/places  
+
+3. Access registered admins ("/admins"):  
+https://semester5-ac1-poolab-190309.herokuapp.com/admins  
+
+4. Access registered attendees ("/attendees"):  
+https://semester5-ac1-poolab-190309.herokuapp.com/attendees  
+
+## Request JSON's examples
   
 ### POST  
   
