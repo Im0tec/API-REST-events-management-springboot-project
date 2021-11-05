@@ -7,54 +7,68 @@ import com.semester5.ac1.pooii.ac1_190309.services.EventService;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
+
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
 import static org.mockito.ArgumentMatchers.nullable;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebMvcTest
+@RunWith(SpringRunner.class)
+@WebMvcTest(controllers = EventController.class)
 public class ApplicationControllerTest {
+    
+    @Autowired
+    private MockMvc mockMvc;
+    
+    @MockBean
+    private EventService eventService;
     
     @Autowired
     private EventController eventController;
 
-    @MockBean
-    private EventService eventService;
-
     @BeforeEach
     public void setup() {
         standaloneSetup(this.eventController);
-    }
+    } 
 
-    // Should Return Success When Search Events By GET Request.
-   /*  @Test
+    /*
+    ======================================
+    ========== EVENT CONTROLLER ==========
+    ==========     TESTS        ==========
+    ======================================
+    */
+
+    // Should return success when search events by GET request.
+    @Test
     public void shouldReturnSuccess_WhenSearchEvents() {
-        
-        when(this.eventService.getEvents(PageRequest.of(0, 1), "", "", ""))
-        
-        given().accept(ContentType.JSON).
+        given().
+        mockMvc(mockMvc).
         when().get("/events").
         then().statusCode(HttpStatus.OK.value());
-    } */
+    }
 
-    // Should Return Success When Search Event With It's ID By GET Request.
+    // Should return success when search event with it's ID by GET request.
     @Test
     public void shouldReturnSuccess_WhenSearchEventById() {
         
-        List<Place> places = new ArrayList<>();
+        //🛑 Under construction 🛑
 
-        when(this.eventService.getEventById(1L)).
+        /*when(eventService.getEventById(1L)).
         thenReturn(new EventDTO(
             1L, 
             "Comic Con",
@@ -69,18 +83,27 @@ public class ApplicationControllerTest {
             105.99,
             null,
             places
-        ));
-
-        given().accept(ContentType.JSON).
+        ));*/
+        given().
+        mockMvc(mockMvc).
+        accept(ContentType.JSON).
         when().get("/events/{id}", 1L).
         then().statusCode(HttpStatus.OK.value());
     }
 
-    @Test
-    public void teste() {
+    /*
+    =============================
+    ========== GENERAL ==========
+    ==========  TESTS  ==========
+    =============================
+    */
 
-        given().accept(ContentType.JSON).
-        when().delete("/events/{id}", 1L).
-        then().statusCode(HttpStatus.NO_CONTENT.value());
+    // Should return Not Found (404) when there is a wrong path in the link.
+    @Test
+    public void ShouldReturnNotFound_WhenUseWrongPath() {
+        given().
+        mockMvc(mockMvc).
+        when().get("/anypath").
+        then().statusCode(HttpStatus.NOT_FOUND.value());
     }
 }
